@@ -34,3 +34,5 @@ The app uses libraries from [Naudio](https://github.com/naudio/NAudio/), [Prism]
 James Jackson 
 
 
+# Contact
+conver-se@sussex.ac.uk
