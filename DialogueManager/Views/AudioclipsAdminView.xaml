@@ -1,0 +1,176 @@
+﻿<UserControl x:Class="DialogueManager.Views.AudioclipsAdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DialogueManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1200">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Margin" Value="10,10,0,10" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Width" Value="270" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Width" Value="90" />
+                <Setter Property="Height" Value="32" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="15,10,0,5" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Margin" Value="10,5,0,5" />
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Padding" Value="10,0" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Height="58" VerticalAlignment="Top">
+            <Label Content="{Binding ScreenTitle}" Width="Auto" Height="Auto" HorizontalAlignment="Left"
+               Margin="15,12,0,0" VerticalAlignment="Top" FontSize="32" Foreground="#3588A5" FontWeight="SemiBold" />
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,0,60,0">
+                <Label Content="Include Ruleset AudioClips" Margin="100,20,0,0"/>
+                <CheckBox IsChecked="{Binding IncludeRulesetClips}" HorizontalAlignment="Left" Margin="5,20,0,0" Height="30"/>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Content="New" Command="{Binding NewBtnClick}" ToolTip="Create a new audio clip" />
+                <Button Grid.Row="1" Content="Cancel" Command="{Binding CancelBtnClick}" ToolTip="Cancel the current operation"/>
+                <Button Grid.Row="2" Content="Delete" Command="{Binding DeleteBtnClick}" ToolTip="Delete the selected audio clip"/>
+                <Button Grid.Row="3" Content="Save" Command="{Binding SaveBtnClick}" ToolTip="Save audio clip"/>
+                <Button Grid.Row="5" Content="Ruleset" Command="{Binding OnRulesetBtnClick}" Margin="15,5,0,10"
+                    Visibility="{Binding RulesetOnlyVisibility}" ToolTip="Generate common ruleset clips"/>
+                <Button Grid.Row="6" Content="Time Triggers" Command="{Binding OnTimeTriggersBtnClick}" Margin="15,5,0,10"
+                    Visibility="{Binding RulesetOnlyVisibility}" ToolTip="Generate time trigger audio clips"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Label" />
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Text="{Binding AudioClipLabel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="Category" Margin="15,10,0,10" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" Width="100" Padding="10,0" Margin="5,0,0,0" Height="30" 
+                        HorizontalContentAlignment="Center" ItemsSource="{Binding CategoryNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                        SelectedValue="{Binding SelectedCategory, Mode=TwoWay}" />
+                    <Label Content="Visibility" Margin="25,10,0,10" Visibility="{Binding RulesetOnlyVisibility}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Width="100" Padding="10,0" Margin="5,0,0,0" Height="30" 
+                        HorizontalContentAlignment="Center" ItemsSource="{Binding VisibilityOptions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                        SelectedValue="{Binding ClipVisibility, Mode=TwoWay}" Visibility="{Binding RulesetOnlyVisibility}"/>
+                </StackPanel>
+                <Label Grid.Row="1" Grid.Column="0" Content="Colour" />
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Button x:Name="LightBlueBtn" Background="Transparent" BorderBrush="Black" Margin="10,0,15,0" BorderThickness="1" Tag="LightBlue"
+                        Click="OnColourBtnClick" Width="30" Height="30" >
+                        <Rectangle Width="30" Height="30" Fill="#A0D6FA" Tag="StatementColour" />
+                    </Button>
+                    <Button x:Name="BeigeBtn" Background="Transparent" BorderBrush="Black" Margin="0,0,15,0" BorderThickness="1" Tag="Beige"
+                        Click="OnColourBtnClick" Width="30" Height="30" >
+                        <Rectangle Width="30" Height="30" Fill="#F1E4B3" Tag="QuestionColour"/>
+                    </Button>
+                    <Button x:Name="OrangeBtn" Background="Transparent" BorderBrush="Black" Margin="0,0,15,0" BorderThickness="1" Tag="Orange"
+                        Click="OnColourBtnClick" Width="30" Height="30" >
+                        <Rectangle Width="30" Height="30" Fill="#F5C238" Tag="ActionColour"/>
+                    </Button>
+                    <Button x:Name="LightGreenBtn" Background="Transparent" BorderBrush="Black" Margin="0,0,15,0" BorderThickness="1" Tag="LightGreen"
+                        Click="OnColourBtnClick" Width="30" Height="30" >
+                        <Rectangle Width="30" Height="30" Fill="#8EEB95" Tag="TriggerColour"/>
+                    </Button>
+                    <Label Content="Include Ruleset Clips" />
+                    <CheckBox IsChecked="{Binding IncludeRulesetClips}" HorizontalAlignment="Left" Margin="0,0,0,0" Height="30"/>
+                    <Label Content="Show hidden Clips" Visibility="{Binding RulesetOnlyVisibility}" />
+                    <CheckBox IsChecked="{Binding IncludeHiddenClips}" HorizontalAlignment="Left" Margin="0,0,0,0" Height="30" Visibility="{Binding RulesetOnlyVisibility}" />
+                </StackPanel>
+                <Label Grid.Row="2" Grid.Column="0" Content="Text" VerticalAlignment="Top"/>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Width="550" Height="Auto" MinHeight="95" TextWrapping="Wrap"
+                        Text="{Binding AudioClipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Top"/>
+                    <Button Content="Generate" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15,0,0,10" 
+                        Command="{Binding OnGenerateBtnClick}" ToolTip="Generate audio file from text" />
+                </StackPanel>
+                <Label Grid.Row="3" Grid.Column="0" Content="Directory" />
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Text="{Binding AudioFileDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="550"/>
+                    <Button Content="Browse" Command="{Binding BrowseBtnClick}" Margin="15,0,0,0"
+                    ToolTip="Browse to select directory for audio file" HorizontalAlignment="Right" />
+                </StackPanel>
+                <Label Grid.Row="4" Grid.Column="0" Content="File Name" />
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" >
+                    <TextBox Text="{Binding AudioFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="550"/>
+                    <Button Content="Load" Command="{Binding LoadBtnClick}" Margin="15,0,0,0"
+                    ToolTip="Load existing audio file" HorizontalAlignment="Right" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,5" 
+             Padding="0,2" HorizontalAlignment="Center" >
+            <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <StackPanel>
+                    <Grid>
+                        <!-- Audio clips -->
+                        <ItemsControl ItemsSource="{Binding AudioClips}">
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.Margin" Value="6,6"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="5" VerticalAlignment="Top" Margin="4,2" MinWidth="1200"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate >
+                                    <Button Content="{Binding Path=Label, Mode=TwoWay}" Padding="7,0" Width="221" Height="30" Margin="0" 
+                                        HorizontalAlignment="Left" HorizontalContentAlignment="Left" Tag="{Binding Path=Category}"
+                                        Background="{Binding Path=ButtonColour, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTip="{Binding Path=Tooltip, Mode=OneWay}" Click="AudioClipBtnClick" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

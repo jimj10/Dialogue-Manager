@@ -1,0 +1,135 @@
+﻿<Window x:Class="DialogueManager.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DialogueManager.Views"
+        mc:Ignorable="d"
+        Title="About Dialogue Manager" x:Name="AWin" Height="340" Width="430">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="Margin" Value="0,2,0,2" />
+            </Style>
+        </Grid.Resources>
+        <StackPanel Orientation="Vertical" Margin="30,10">
+            <TextBlock Text="Dialogue Manager " FontWeight="Bold" />
+            <TextBlock Text="{Binding Version}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Copyright}" />
+                <TextBlock>           
+                <Hyperlink NavigateUri="http://www.sussex.ac.uk/informatics/" RequestNavigate="OnNavigate">
+                    Department of Informatics, University of Sussex
+                </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Licensed under the " />
+                <TextBlock>   
+                        <Hyperlink NavigateUri="MPL" RequestNavigate="OnNavigate">
+                            Microsoft Public License
+                        </Hyperlink>
+                </TextBlock>
+                <TextBlock Text="." />
+            </StackPanel>
+            <TextBlock Text="CREDITS" FontWeight="Bold" Margin="0,15,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Google software is licensed under "/>
+                <TextBlock>   
+                    <Hyperlink NavigateUri="https://developers.google.com/open-source/licenses/bsd/" RequestNavigate="OnNavigate">
+                        BSD
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Text=" and " />
+                <TextBlock>   
+                    <Hyperlink NavigateUri="APL" RequestNavigate="OnNavigate">
+                        Apache
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Text=" licenses."/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>   
+                <Hyperlink NavigateUri="https://github.com/naudio/NAudio/" RequestNavigate="OnNavigate">
+                    Naudio
+                </Hyperlink>
+                <TextBlock Text=" is licensed under the " />
+                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>   
+                        <Hyperlink NavigateUri="MPL" RequestNavigate="OnNavigate">
+                            Microsoft Public License
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Text="." />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>   
+                <Hyperlink NavigateUri="https://github.com/PrismLibrary/Prism/" RequestNavigate="OnNavigate">
+                    Prism
+                </Hyperlink>
+                <TextBlock Text=" is licensed under the " />
+                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>   
+                        <Hyperlink NavigateUri="MIT" RequestNavigate="OnNavigate">
+                            MIT License
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Text="." />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>   
+                <Hyperlink NavigateUri="https://www.newtonsoft.com/json/" RequestNavigate="OnNavigate">
+                    Json.NET
+                </Hyperlink>
+                <TextBlock Text=" is licensed under the " />
+                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>   
+                        <Hyperlink NavigateUri="MIT" RequestNavigate="OnNavigate">
+                            MIT License
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Text="." />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>   
+                    <Hyperlink NavigateUri="https://github.com/charri/Font-Awesome-WPF/" RequestNavigate="OnNavigate">
+                    Font-Awesome-WPF
+                </Hyperlink>
+                <TextBlock Text=" is licensed under the " />
+                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>   
+                        <Hyperlink NavigateUri="NewtonSoftLicense" RequestNavigate="OnNavigate">
+                            MIT License
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Text="." />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>   
+                <Hyperlink NavigateUri="https://www.sqlite.org/" RequestNavigate="OnNavigate">
+                    SQLite
+                </Hyperlink>
+                </TextBlock>
+                <TextBlock Text=" is " >
+                <Hyperlink NavigateUri="https://www.sqlite.org/copyright.html" RequestNavigate="OnNavigate">
+                    Public domain software
+                </Hyperlink>
+                </TextBlock>
+                <TextBlock Text="." />
+            </StackPanel>
+            <TextBlock x:Name="MicrosoftPublicLicense" TextWrapping="Wrap" Width="720"/>
+            <TextBlock x:Name="ApacheLicense" TextWrapping="Wrap" Width="720"/>
+            <TextBlock x:Name="MitLicense" TextWrapping="Wrap" Width="720"/>
+            <TextBlock x:Name="NewtonSoftLicense" TextWrapping="Wrap" Width="720"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

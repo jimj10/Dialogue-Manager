@@ -1,0 +1,24 @@
+﻿<Window x:Class="DialogueManager.Views.DisplayWinView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DialogueManager.Views"
+        mc:Ignorable="d"
+        Title="DisplayWinView" Height="450" Width="800" Background="Black" >
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="15"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Viewbox Stretch="Uniform">
+        <Grid x:Name="MainGrid" Background="Black" Width="{x:Static SystemParameters.PrimaryScreenWidth}">
+            <StackPanel VerticalAlignment="Center" >
+                <TextBlock x:Name="Title" Margin="60" FontSize="80" TextAlignment="Center" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Background="Black" TextWrapping="NoWrap" />
+                <TextBlock x:Name="Body" Margin="60,0" FontSize="60" TextAlignment="Left" LineHeight="110" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Background="Black" TextWrapping="WrapWithOverflow" />
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>

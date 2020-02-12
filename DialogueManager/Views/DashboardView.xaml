@@ -1,0 +1,388 @@
+﻿<UserControl x:Class="DialogueManager.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:exp="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+             xmlns:local="clr-namespace:DialogueManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1700">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="#3588A5" />
+                <Setter Property="Margin" Value="10,4,0,4" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Width" Value="154" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Width" Value="40" />
+                <Setter Property="Margin" Value="8,0,8,15" />
+                <Setter Property="Padding" Value="5,0" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                <Setter Property="Margin" Value="15,0,0,0" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+            <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                <Setter Property="Width" Value="60" />
+                <Setter Property="Margin" Value="20,10,50,0" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding ScreenTitle}" Width="Auto" 
+               Margin="10,12,0,0" VerticalAlignment="Top" FontSize="32" FontWeight="SemiBold" />
+        <!-- Left hand column -->
+        <Grid Grid.Row="1" Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5,15,5">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <!-- Audio -->
+            <StackPanel Grid.Row="1"  Orientation="Horizontal">
+                <Label Content="Audio" />
+                <Button Margin="0" Background="White" BorderThickness="0" Visibility="{Binding AudioOnBtnVisibility}" 
+                    Command="{Binding ToggleAudioBtnClick}" ToolTip="Audio Enabled" >
+                    <fa:ImageAwesome Icon="VolumeUp" Height="30" Margin="0,3,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+                <Button Margin="0" Background="White" BorderThickness="0" Visibility="{Binding AudioOffBtnVisibility}" 
+                    Command="{Binding ToggleAudioBtnClick}" ToolTip="Audio muted" >
+                    <Image Source="pack://application:,,,/Resources/volume-muted.png" Stretch="Uniform" Margin="-2,3,0,0"
+                            RenderOptions.BitmapScalingMode="HighQuality" />
+                </Button>
+                <Button Margin="0" Background="White" BorderThickness="0" Command="{Binding ChimesBtnClick}" ToolTip="Play CONVER-SE chimes" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/tunes-128.png" 
+                            RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="3,0,0,0" Padding="0" Background="White" BorderThickness="0" Visibility="{Binding OfflineBtnVisibility}" 
+                ToolTip="Offline: using recorded audio clips" Command="{Binding ToggleOnlineModeBtnClick}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/recording.png" Stretch="Uniform" 
+                            RenderOptions.BitmapScalingMode="HighQuality" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="3,0,0,0" Padding="0" Background="White" BorderThickness="0" Visibility="{Binding OnlineBtnVisibility}" 
+                    ToolTip="Online: downloading audio clips from cloud" Command="{Binding ToggleOnlineModeBtnClick}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/cloud1.png" Stretch="Uniform" 
+                            RenderOptions.BitmapScalingMode="HighQuality" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="4,0,0,0" Background="White" BorderThickness="0" Visibility="{Binding KeepAliveOnBtnVisibility}" 
+                    Command="{Binding ToggleKeepAliveBtnClick}" ToolTip="KeepAlive Enabled" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/keepAlive.png" Stretch="Uniform" 
+                            RenderOptions.BitmapScalingMode="HighQuality" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="4,0,0,0" Background="White" BorderThickness="0" Visibility="{Binding KeepAliveOffBtnVisibility}" 
+                    Command="{Binding ToggleKeepAliveBtnClick}" ToolTip="KeepAlive Disabled" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/keepAliveDisabled.png" Stretch="Uniform" 
+                            RenderOptions.BitmapScalingMode="HighQuality" />
+                    </StackPanel>
+                </Button>
+                <!-- Record -->
+                <Label Content="Record" Margin="50,0,0,0"/>
+                <Button Command="{Binding ToggleRecordingBtnClick}" ToolTip="Start Recording" Margin="0,0,10,0" Padding="0" 
+                    Background="White" BorderThickness="0" Visibility="{Binding StartRecordingBtnVisibility}" IsEnabled="{Binding RecordingEnabled}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Resources/mic_off.png" 
+                                RenderOptions.BitmapScalingMode="HighQuality" Stretch="Uniform" />
+                        </StackPanel>
+                </Button>
+                <Button Command="{Binding ToggleRecordingBtnClick}" ToolTip="Stop Recording" Margin="0" 
+                    Padding="0" Background="White" BorderThickness="0" Visibility="{Binding StopRecordingBtnVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/mic_on.png" 
+                            RenderOptions.BitmapScalingMode="HighQuality" Stretch="Uniform" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5,15,5">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <!-- Speed Slider -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Label Content="Speed" />
+                <Label Foreground="Black" FontSize="15" Margin="0,3,0,0" Content="{Binding MinSpeedRatioStr, Mode=OneTime}" />
+                <Slider Name="SpeedRatioSlider" Margin="0,8,0,0" Height="24" Width="250" TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight" IsSnapToTickEnabled="True" TickFrequency="0.05" AutoToolTipPrecision="2" 
+                    Minimum="{Binding MinSpeedRatio, Mode=OneTime}" Maximum="{Binding MaxSpeedRatio, Mode=OneTime}" 
+                    Value="{Binding SpeedRatio, Mode=TwoWay}"/>
+                <Label Foreground="Black" FontSize="15" Margin="0,3,0,0"  Content="{Binding MaxSpeedRatioStr, Mode=OneTime}" />
+            </StackPanel>
+            <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5,15,5">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <!-- Device and Rule Number -->
+            <StackPanel Grid.Row="5" Orientation="Horizontal"  IsEnabled="{Binding RulesetComponentsEnabled}">
+                <Label Content="Device"/>
+                <TextBox Width="160" Margin="5,0,15,0" Padding="8,0,0,0" Text="{Binding DeviceName}" />
+                <Label Content="Rule" />
+                <ComboBox Width="60" Margin="5,0" FontSize="14" Padding="8,0,0,0"
+                    ItemsSource="{Binding RuleNumbers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                    SelectedValue="{Binding SelectedRuleNumberStr, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.Row="6" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5,15,5">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <!-- Time -->
+            <StackPanel Grid.Row="7" Orientation="Horizontal" IsEnabled="{Binding RulesetComponentsEnabled}" >
+                <Label Margin="10,4,0,4" Content="Time" />
+                <Grid>
+                    <TextBox Grid.Row="0"  Text=":" Width="57" Height="30" Padding="0" Margin="4,0,0,2" FontSize="17"
+                        BorderThickness="0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" 
+                        VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,0" >
+                        <Border HorizontalAlignment="Left" BorderThickness="1" Width="57" Height="30" Margin="5,0,0,0" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="HourTextBox" Text="{Binding HourTextStr, Mode=OneWay}" MouseLeave="HourTextBoxMouseLeave"
+                                    Width="26" Height="30" Padding="0" Margin="0" BorderThickness="0" FontSize="17" 
+                                    MaxLines="1" MaxLength="2" MaxHeight="30" PreviewTextInput="TimePreviewInput" Background="Transparent"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                <TextBox x:Name="MinuteTextBox" Text="{Binding MinuteTextStr, Mode=OneWay}" MouseLeave="MinuteTextBoxMouseLeave" 
+                                    Width="26" Height="30" Padding="0" Margin="0" BorderThickness="0" FontSize="17" MaxLines="1" MaxLength="2" 
+                                    MaxHeight="30" PreviewTextInput="TimePreviewInput" Background="Transparent"  
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="AM" Margin="15,0,0,0" Command="{Binding ToggleTimePeriodBtnClick}" Visibility="{Binding AMBtnVisibility}"  />
+                            <Button Content="PM" Margin="15,0,0,0" Command="{Binding ToggleTimePeriodBtnClick}" Visibility="{Binding PMBtnVisibility}" />
+                            <ComboBox Width="90" Margin="15,0,0,0" FontSize="14" Padding="8,0,0,0"
+                            ItemsSource="{Binding DaysList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedDays}" />
+                            <CheckBox IsChecked="{Binding TimeTriggerChecked}" ToolTip="Select Time Triggers"/>
+                            <Label Margin="0,5,0,4" Foreground="Black" FontSize="14" Content="Select"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="8" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5,15,5">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <!-- Duplicates and Conflicts Check -->
+            <StackPanel Grid.Row="9" Orientation="Horizontal" IsEnabled="{Binding RulesetComponentsEnabled}">
+                <Label Margin="10,4,0,4" Content="Check" />
+                <CheckBox Margin="5,0,0,0" IsChecked="{Binding DuplicateCheck}" />
+                <Label Margin="0,5,0,4" Foreground="Black" FontSize="14" Content="Duplicates" />
+                <CheckBox  Margin="5,0,0,0" IsChecked="{Binding ConflictCheck}" />
+                <Label Margin="0,5,0,4" Foreground="Black" FontSize="14" Content="Conflicts" />
+            </StackPanel>
+        </Grid>
+        <!-- Centre Column -->
+        <ComboBox Grid.Row="0" Grid.Column="1"  Width="260" Padding="10,0" FontSize="18" 
+            Margin="0,6,0,0" Height="33" HorizontalContentAlignment="Center"
+            ItemsSource="{Binding SessionNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+            SelectedValue="{Binding SessionName, Mode=TwoWay}" />
+        <Grid Grid.Row="1" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ComboBox Grid.Row="0" Grid.Column="1"  Width="260" Padding="10,0" FontSize="18" 
+                Margin="0,6,0,0" Height="33" HorizontalContentAlignment="Center"
+                ItemsSource="{Binding SessionNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                SelectedValue="{Binding SessionName, Mode=TwoWay}" />
+            <TextBox Grid.Row="0" Text="{Binding Path=AudioText, UpdateSourceTrigger=PropertyChanged}" 
+                Width="370" Height="205" Margin="13,10" FontSize="15" Foreground="{Binding AudioTextColour}"
+                TextWrapping="Wrap" BorderThickness="0.5" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                VerticalContentAlignment="Top" IsReadOnly="{Binding AudioTextBoxIsReadOnly}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <exp:CallMethodAction MethodName="OnAudioTextHasFocus" TargetObject="{Binding}"></exp:CallMethodAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <!-- Play Audio Buttons -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Tag="State" Command="{Binding PlayBtnClick}" CommandParameter="State" 
+                    Width="95" Height="40" Margin="15,0,15,5" MouseEnter="OnMouseEnterPlayBtn"
+                    IsEnabled="{Binding StatePlayBtnEnabled}" Background="#f3f3f3" ToolTip="Play audio" Padding="0" 
+                    Visibility="{Binding PlayRuleBtnVisibility}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Resources/play1.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality" Width="78" Height="45" Stretch="Uniform" />
+                            <Border BorderBrush="{x:Null}" Height="39" HorizontalAlignment="Center">
+                                <TextBlock Text="State" FontSize="16" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button Tag="Confirm" Command="{Binding PlayBtnClick}" CommandParameter="Confirm" 
+                    Width="95" Height="40" Margin="15,0,15,5" MouseEnter="OnMouseEnterPlayBtn"
+                    IsEnabled="{Binding ConfirmPlayBtnEnabled}" Background="#f3f3f3" ToolTip="Play audio" Padding="0"
+                    Visibility="{Binding PlayRuleBtnVisibility}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Resources/play1.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality" Width="78" Height="45" Stretch="Uniform" />
+                            <Border BorderBrush="{x:Null}" Height="39" HorizontalAlignment="Center">
+                                <TextBlock Text="Confirm" FontSize="16" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button Tag="Check" Command="{Binding PlayBtnClick}" CommandParameter="Check" 
+                    Width="95" Height="40" Margin="15,0,15,5" MouseEnter="OnMouseEnterPlayBtn"
+                    IsEnabled="{Binding CheckPlayBtnEnabled}" Background="#f3f3f3" ToolTip="Play audio" Padding="0" 
+                    Visibility="{Binding PlayRuleBtnVisibility}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Resources/play1.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality" Width="78" Height="45" Stretch="Uniform" />
+                            <Border BorderBrush="{x:Null}" Height="39" HorizontalAlignment="Center">
+                                <TextBlock Text="Check" FontSize="16" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button Tag="Play" Command="{Binding PlayBtnClick}" CommandParameter="Play" 
+                    Width="90" Height="40" Margin="15,5" 
+                    IsEnabled="{Binding PlayBtnEnabled}" Background="#f3f3f3" ToolTip="Play audio" Padding="0" 
+                    Visibility="{Binding PlayBtnVisibility}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="pack://application:,,,/Resources/play1.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality" Width="78" Height="45" Stretch="Uniform" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <!-- Right hand column - Cast Panel -->
+        <Grid Grid.Row="1" Grid.Column="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" BorderThickness="0.5" Width="370" Height="205" 
+                    Margin="8,10,0,10" Background="Black" >
+                <TextBox Text="{Binding Path=CastText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    Width="370" Height="205" Foreground="{Binding CastTextColour}" Background="Black" TextWrapping="Wrap" 
+                    FontSize="15" Padding="10" HorizontalAlignment="Center" VerticalContentAlignment="Top" />
+            </Border>
+            <!-- Cast -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" IsEnabled="{Binding RulesetComponentsEnabled}">
+                <Label Content="Cast Display" />
+                <Button Width="50" Margin="3,4,0,4" Background="White" BorderThickness="0" Visibility="{Binding CastOnBtnVisibility}"
+                    Command="{Binding ToggleCastDisplayBtnClick}" CommandParameter="false" IsEnabled="{Binding CastDisplayEnabled}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/cast-display.png" 
+                            RenderOptions.BitmapScalingMode="HighQuality" Stretch="Uniform" >
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.6" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+                <Button Width="50" Margin="3,4,0,4" Background="White" BorderThickness="0" Visibility="{Binding CastOffBtnVisibility}"
+                    Command="{Binding ToggleCastDisplayBtnClick}" CommandParameter="true" IsEnabled="{Binding CastDisplayEnabled}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/cast-displayDisabled.png" 
+                            RenderOptions.BitmapScalingMode="HighQuality" Stretch="Uniform" >
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.6" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+                <CheckBox  Margin="5,0,0,0" IsChecked="{Binding CastDisplayEnabled}"/>
+                <Label Margin="0,5,0,4" Foreground="Black" FontSize="14" Content="Enable"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0">
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        </StackPanel>
+        <!-- Bottom Panel -->
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="1" 
+            Margin="0,0,0,5" Padding="0,3" HorizontalAlignment="Center">
+            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <!-- Session audio clips -->
+                    <ItemsControl ItemsSource="{Binding AudioClips}">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin" Value="6,6"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5" VerticalAlignment="Top" Margin="4,2" MinWidth="1200"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate >
+                                <Button Content="{Binding Path=Label, Mode=OneWay}" Padding="7,0" Width="222" Margin="0" 
+                                    HorizontalAlignment="Left" HorizontalContentAlignment="Left" Tag="{Binding Path=Category}"
+                                    Background="{Binding Path=ButtonColour}" Click="AudioClipBtnClick"
+                                    ToolTip="{Binding Path=Tooltip, Mode=OneWay}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>
