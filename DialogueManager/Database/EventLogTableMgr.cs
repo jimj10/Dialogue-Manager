@@ -53,7 +53,7 @@ namespace DialogueManager.Database
                         "[EventId], [TimeStamp], [Category], [Message]) " +
                         "VALUES( @eventId, @timeStamp, @category, @message);";
                     cmd.Parameters.Add(new SQLiteParameter("@eventId", SqlDbType.Int) { Value = logEntry.EventId });
-                    cmd.Parameters.Add(new SQLiteParameter("@timeStamp", DbType.String) { Value = logEntry.TimeStamp });
+                    cmd.Parameters.Add(new SQLiteParameter("@timeStamp", DbType.String) { Value = logEntry.EntryDateTime });
                     cmd.Parameters.Add(new SQLiteParameter("@category", DbType.String) { Value = Enum.GetName(logEntry.Category.GetType(), logEntry.Category) });
                     cmd.Parameters.Add(new SQLiteParameter("@message", DbType.String) { Value = logEntry.Message });
                     updatedRows += cmd.ExecuteNonQuery();

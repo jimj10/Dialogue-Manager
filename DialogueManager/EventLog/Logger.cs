@@ -31,7 +31,7 @@ namespace DialogueManager.EventLog
             LogEntry logEntry = new LogEntry()
             {
                 EventId = Index++,
-                DateTime = DateTime.Now,
+                EntryDateTime = DateTime.Now,
                 Category = category,
                 Message = msg
             };
@@ -55,7 +55,7 @@ namespace DialogueManager.EventLog
                         logViewerCtrl.AddLogEntry(new LogEntry()
                         {
                             EventId = eventId,
-                            DateTime = DateTime.Parse(dr["TimeStamp"].ToString()),
+                            EntryDateTime = DateTime.Parse(dr["TimeStamp"].ToString()),
                             Category = GetCategory(dr["Category"].ToString()),
                             Message = dr["Message"].ToString()
                         });

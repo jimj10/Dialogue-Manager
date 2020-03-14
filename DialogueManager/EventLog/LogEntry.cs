@@ -12,6 +12,7 @@
  */
 using System;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace DialogueManager.EventLog
 {
@@ -33,9 +34,15 @@ namespace DialogueManager.EventLog
 
     public class LogEntry : PropertyChangedBase
     {
-        public DateTime DateTime { get; set; }
+        public DateTime EntryDateTime { get; set; }
 
-        public string TimeStamp { get { return DateTime.ToString("dd/MM/yyyy HH:mm:ss"); } set { TimeStamp = value; } }
+        public string Timestamp {
+            get {
+                return String.Format("{0} {1}",
+                     EntryDateTime.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern), EntryDateTime.ToString("HH:mm:ss"));
+            }
+            set { Timestamp = value; }
+        }
 
         public int EventId { get; set; }
 
