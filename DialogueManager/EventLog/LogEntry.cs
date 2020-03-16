@@ -20,10 +20,10 @@ namespace DialogueManager.EventLog
     {
         [Description("INFO")]
         INFO,
-        [Description("CONVERSE_AUDIO")]
-        CONVERSE_AUDIO,
-        [Description("CONVERSE_TEXT")]
-        CONVERSE_TEXT,
+        [Description("CONV-AUDIO")]
+        CONV_AUDIO,
+        [Description("CONV-TEXT")]
+        CONV_TEXT,
         [Description("WARN")]
         WARN,
         [Description("ERROR")]

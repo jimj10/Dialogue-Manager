@@ -28,8 +28,13 @@
                 <MenuItem Header="Audio clips" x:Name="AudioclipsMenu" Command="{Binding AudioclipsMenuClick}" />
                 <MenuItem Header="Sessions" x:Name="SessionsMenu" Command="{Binding SessionsMenuClick}" />
                 <MenuItem Header="Settings" x:Name="SettingsMenu" Command="{Binding SettingsMenuClick}"  />
-                <MenuItem Header="Event Log" Command="{Binding EventLogMenuClick}" />
-                <MenuItem Command="{Binding AboutMenuClick}" HorizontalAlignment="Right" >
+                <MenuItem Command="{Binding EventLogMenuClick}" ToolTip="Event Log">
+                    <MenuItem.Icon>
+                        <fa:ImageAwesome Icon="List" Height="11" Margin="0,2,0,0" RenderOptions.BitmapScalingMode="HighQuality" 
+                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="{Binding AboutMenuClick}" HorizontalAlignment="Right" ToolTip="About">
                     <MenuItem.Icon>
                         <fa:ImageAwesome Icon="Info" Width="20" Margin="0" RenderOptions.BitmapScalingMode="HighQuality" 
                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>

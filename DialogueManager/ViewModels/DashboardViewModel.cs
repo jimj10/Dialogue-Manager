@@ -982,7 +982,7 @@ namespace DialogueManager.ViewModels
             {
                 AudioMgr.PlayAudioClip(audioFile);
                 AudioTextColour = new SolidColorBrush(Colors.Red);
-                Logger.AddLogEntry(LogCategory.CONVERSE_AUDIO, AudioText);
+                Logger.AddLogEntry(LogCategory.CONV_AUDIO, AudioText);
             }
             else
             {
@@ -1024,7 +1024,7 @@ namespace DialogueManager.ViewModels
             {
                 AudioMgr.PlayAudioClip(audioFile);
                 AudioTextColour = new SolidColorBrush(Colors.Red);
-                Logger.AddLogEntry(LogCategory.CONVERSE_AUDIO, AudioText);
+                Logger.AddLogEntry(LogCategory.CONV_AUDIO, AudioText);
             }
             else
             {
