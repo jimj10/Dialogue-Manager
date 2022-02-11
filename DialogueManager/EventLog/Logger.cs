@@ -7,7 +7,7 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  * The Event Log code is derived from code submitted to Stackoverflow by
- * Federico Berasategui (thank-you)
+ * Federico Berasategui
  * https://stackoverflow.com/questions/16743804/implementing-a-log-viewer-with-wpf 
  */
 using DialogueManager.Database;

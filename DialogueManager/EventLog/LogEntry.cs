@@ -16,21 +16,7 @@ using System.Globalization;
 
 namespace DialogueManager.EventLog
 {
-    public enum LogCategory
-    {
-        [Description("INFO")]
-        INFO,
-        [Description("CONV-AUDIO")]
-        CONV_AUDIO,
-        [Description("CONV-TEXT")]
-        CONV_TEXT,
-        [Description("WARN")]
-        WARN,
-        [Description("ERROR")]
-        ERROR,
-        [Description("DEBUG")]
-        DEBUG
-    };
+    
 
     public class LogEntry : PropertyChangedBase
     {
@@ -50,4 +36,20 @@ namespace DialogueManager.EventLog
 
         public string Message { get; set; }
     }
+
+    public enum LogCategory
+    {
+        [Description("INFO")]
+        INFO,
+        [Description("CONV_AUDIO")]
+        CONV_AUDIO,
+        [Description("CONV_TEXT")]
+        CONV_TEXT,
+        [Description("WARN")]
+        WARN,
+        [Description("ERROR")]
+        ERROR,
+        [Description("DEBUG")]
+        DEBUG
+    };
 }
