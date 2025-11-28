@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Diagnostics;
 
 namespace DialogueManager.Database
 {
@@ -248,8 +247,8 @@ namespace DialogueManager.Database
             if (dataTable != null)
             {
                 audioClips.Clear();
-                string[] propsList = { "ClipId", "Category", "Label", "DeviceName", "ButtonColour", "IsVisible", 
-                    "StatementText", "ConfirmationText", "CheckText", "StatementAudioFile", "ConfirmationAudioFile", 
+                string[] propsList = { "ClipId", "Category", "Label", "DeviceName", "ButtonColour", "IsVisible",
+                    "StatementText", "ConfirmationText", "CheckText", "StatementAudioFile", "ConfirmationAudioFile",
                     "CheckAudioFile", "Tooltip" };
                 bool allOK = true;
                 foreach (var prop in propsList)
@@ -289,7 +288,9 @@ namespace DialogueManager.Database
                     return true;
                 }
                 else
+                {
                     return false;
+                }
             }
             return false;
         }

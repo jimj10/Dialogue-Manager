@@ -12,8 +12,10 @@ namespace DialogueManager
     public static class EventSystem
     {
         private static IEventAggregator _current;
-        public static IEventAggregator Current {
-            get {
+        public static IEventAggregator Current
+        {
+            get
+            {
                 return _current ?? (_current = new EventAggregator());
             }
         }
@@ -63,7 +65,8 @@ namespace DialogueManager
 
     public class OnlineVoicesLoaded { }
 
-    public class AudioUpdated {
+    public class AudioUpdated
+    {
         public float RecordingLevel { get; set; }
     }
 
@@ -76,14 +79,15 @@ namespace DialogueManager
 
     public class SessionsInventoryChanged { }
 
-    public class SessionInventoryChanged 
+    public class SessionInventoryChanged
     {
         public string SessionName { get; set; }
     }
 
     public class AudioClipsInventoryChanged { }
 
-    public class EnableCastDisplayChanged {
+    public class EnableCastDisplayChanged
+    {
         public string SessionName { get; set; }
         public bool CastEnable { get; set; }
     }

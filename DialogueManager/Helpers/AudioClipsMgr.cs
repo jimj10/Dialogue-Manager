@@ -19,7 +19,7 @@ using System.Linq;
 namespace DialogueManager
 {
     static class AudioClipsMgr
-    { 
+    {
         public static List<AudioClip> AudioClips = new List<AudioClip>();
         public static List<AudioClip> TimeTriggerClips = new List<AudioClip>();
         public static bool AudioclipsLoaded = false;
@@ -36,7 +36,9 @@ namespace DialogueManager
                     return newClip.ClipId;
                 }
                 else
+                {
                     return -2; // problem updating database
+                }
             }
             return -1; // audioclip label already exits
         }
@@ -54,7 +56,9 @@ namespace DialogueManager
                         return true;
                     }
                     else
+                    {
                         return false;
+                    }
                 }
             }
             return false;
@@ -76,14 +80,20 @@ namespace DialogueManager
             if (!originalClip.Label.Equals(clipCopy.Label))
             {
                 if (AudioClips.FirstOrDefault(x => x.Label.Equals(clipCopy.Label)) != null)
+                {
                     return -1; // name already exists
+                }
             }
             var index = AudioClips.FindIndex(c => c.ClipId == originalClip.ClipId);
             AudioClips[index] = clipCopy;
             if (!AudioClipsTableMgr.UpdateAudioClip(clipCopy))
+            {
                 return -2; // problem updating database
+            }
             else
+            {
                 return clipCopy.ClipId;
+            }
         }
 
         public static AudioClip GetAudioClipCopy(string label)
@@ -152,7 +162,9 @@ namespace DialogueManager
                 foreach (var sessionClip in sessionClips)
                 {
                     if (sessionClip.Category.Equals(category))
+                    {
                         audioClips.Add(sessionClip);
+                    }
                 }
             }
             return audioClips;
@@ -233,7 +245,7 @@ namespace DialogueManager
                         {
                             allOK = false;
                             Logger.AddLogEntry(LogCategory.ERROR, String.Format("Audio clip {0}: audio file {1} not found", clip.Label, clip.CheckAudioFile));
-                        }  
+                        }
                     }
                 }
             }

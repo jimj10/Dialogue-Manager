@@ -8,8 +8,6 @@
  * 
  */
 
-using System.Windows;
-
 namespace DialogueManager.Models
 {
     public class AudioClip
@@ -19,9 +17,11 @@ namespace DialogueManager.Models
         public string Category { get; set; } = "Standard"; // 'Standard' or rule-related ('Ruleset', 'Action', 'Trigger', 'TimeTrigger')
 
         private string label;
-        public string Label {
+        public string Label
+        {
             get { return label; }
-            set {
+            set
+            {
                 label = value;
                 Tooltip = label;
             }

@@ -35,12 +35,16 @@ namespace DialogueManager.ViewModels
         public ObservableCollection<string> VisibilityOptions { get { return new ObservableCollection<string>() { "Visible", "Hidden" }; } }
 
         private string selectedCategory = "Standard";
-        public string SelectedCategory {
+        public string SelectedCategory
+        {
             get { return selectedCategory; }
-            set {
+            set
+            {
                 selectedCategory = value;
                 if (selectedCategory.Equals("Trigger"))
+                {
                     AudioFileDirectory = DirectoryMgr.TriggerClipsDirectory;
+                }
             }
         }
 
@@ -49,54 +53,66 @@ namespace DialogueManager.ViewModels
         public ICollectionView AudioclipsView { get; set; }
 
         private string screenTitle = "Standard Audio Clips";
-        public string ScreenTitle {
+        public string ScreenTitle
+        {
             get { return screenTitle; }
-            set {
+            set
+            {
                 screenTitle = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScreenTitle)));
             }
         }
 
         private string audioClipLabel;
-        public string AudioClipLabel {
+        public string AudioClipLabel
+        {
             get { return audioClipLabel; }
-            set {
+            set
+            {
                 audioClipLabel = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioClipLabel)));
             }
         }
 
         private Visibility rulesetOnlyVisibility = Visibility.Collapsed;
-        public Visibility RulesetOnlyVisibility {
+        public Visibility RulesetOnlyVisibility
+        {
             get { return rulesetOnlyVisibility; }
-            set {
+            set
+            {
                 rulesetOnlyVisibility = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RulesetOnlyVisibility)));
             }
         }
 
         private string audioClipText;
-        public string AudioClipText {
+        public string AudioClipText
+        {
             get { return audioClipText; }
-            set {
+            set
+            {
                 audioClipText = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioClipText)));
             }
         }
 
         private string audioFileName;
-        public string AudioFileName {
+        public string AudioFileName
+        {
             get { return audioFileName; }
-            set {
+            set
+            {
                 audioFileName = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioFileName)));
             }
         }
 
         private bool includeRulesetClips = false;
-        public bool IncludeRulesetClips {
+        public bool IncludeRulesetClips
+        {
             get { return includeRulesetClips; }
-            set {
+            set
+            {
                 includeRulesetClips = value;
                 RulesetOnlyVisibility = includeRulesetClips ? Visibility.Visible : Visibility.Collapsed;
                 ScreenTitle = includeRulesetClips ? "Ruleset Audio Clips" : "Standard Audio Clips";
@@ -109,9 +125,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool includeHiddenClips = false;
-        public bool IncludeHiddenClips {
+        public bool IncludeHiddenClips
+        {
             get { return includeHiddenClips; }
-            set {
+            set
+            {
                 includeHiddenClips = value;
                 RulesetOnlyVisibility = includeHiddenClips ? Visibility.Visible : Visibility.Collapsed;
                 if (AudioclipsView != null)
@@ -124,9 +142,11 @@ namespace DialogueManager.ViewModels
 
         private string audioFileDirectory = String.Empty;
 
-        public string AudioFileDirectory {
+        public string AudioFileDirectory
+        {
             get { return audioFileDirectory; }
-            set {
+            set
+            {
                 if (!audioFileDirectory.Equals(value))
                 {
                     audioFileDirectory = value;
@@ -149,12 +169,17 @@ namespace DialogueManager.ViewModels
         public AudioclipsAdminViewModel()
         {
             if (AudioClipsMgr.AudioclipsLoaded)
+            {
                 RefreshAudioClips();
+            }
             else
+            {
                 EventSystem.Subscribe<AudioclipsLoaded>(OnAudioclipsLoaded);
+            }
+
             SelectedAudioClip = new AudioClip();
             newAudioClip = true;
- 
+
         }
 
         private void OnAudioclipsLoaded(AudioclipsLoaded al)
@@ -179,21 +204,32 @@ namespace DialogueManager.ViewModels
             if (IncludeRulesetClips)
             {
                 if (!IncludeHiddenClips && !audioClip.IsVisible)
+                {
                     return false;
+                }
                 else
+                {
                     return (!audioClip.Label.Contains("OK, rule deleted")
                         && !audioClip.Label.Contains("List rules")
                         && !audioClip.Label.Contains("State selected rule"));
+                }
             }
             else
+            {
                 return audioClip.Category.Equals("Standard");
+            }
         }
 
         private ICommand newBtnClick;
-        public ICommand NewBtnClick {
-            get {
+        public ICommand NewBtnClick
+        {
+            get
+            {
                 if (newBtnClick == null)
+                {
                     newBtnClick = new RelayCommand(param => NewClip(param), param => true);
+                }
+
                 return newBtnClick;
             }
             set { newBtnClick = value; }
@@ -211,10 +247,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand deleteBtnClick;
-        public ICommand DeleteBtnClick {
-            get {
+        public ICommand DeleteBtnClick
+        {
+            get
+            {
                 if (deleteBtnClick == null)
+                {
                     deleteBtnClick = new RelayCommand(param => DeleteClipConfirm(param), param => true);
+                }
+
                 return deleteBtnClick;
             }
             set { deleteBtnClick = value; }
@@ -222,7 +263,7 @@ namespace DialogueManager.ViewModels
 
         public void DeleteClipConfirm(object obj)
         {
-            messageDialogWin = new MessageDialogWin("Deleting audio clip", 
+            messageDialogWin = new MessageDialogWin("Deleting audio clip",
                 String.Format("This will delete audio clip \"{0}\" from all sessions. Are you sure?", SelectedAudioClip.Label), "Yes", "No");
             messageDialogWin.MessageResponse += DeleteMessageResponse;
             messageDialogWin.Show();
@@ -233,7 +274,7 @@ namespace DialogueManager.ViewModels
             messageDialogWin.MessageResponse -= DeleteMessageResponse;
             if (e.Equals("Yes"))
             {
-                SessionsMgr.DeleteClipFromAllSessions(SelectedAudioClip.ClipId); 
+                SessionsMgr.DeleteClipFromAllSessions(SelectedAudioClip.ClipId);
                 AudioClipsMgr.DeleteAudioClip(SelectedAudioClip.Label, out string outcome);
                 RefreshAudioClips();
                 SelectedAudioClip = new AudioClip();
@@ -247,10 +288,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand cancelBtnClick;
-        public ICommand CancelBtnClick {
-            get {
+        public ICommand CancelBtnClick
+        {
+            get
+            {
                 if (cancelBtnClick == null)
+                {
                     cancelBtnClick = new RelayCommand(param => CancelChanges(param), param => true);
+                }
+
                 return cancelBtnClick;
             }
             set { cancelBtnClick = value; }
@@ -272,10 +318,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand loadBtnClick;
-        public ICommand LoadBtnClick {
-            get {
+        public ICommand LoadBtnClick
+        {
+            get
+            {
                 if (loadBtnClick == null)
+                {
                     loadBtnClick = new RelayCommand(param => LoadAudioFile(param), param => true);
+                }
+
                 return loadBtnClick;
             }
             set { loadBtnClick = value; }
@@ -293,14 +344,19 @@ namespace DialogueManager.ViewModels
             {
                 AudioFileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
                 AudioFileDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-            }  
+            }
         }
 
         private ICommand saveBtnClick;
-        public ICommand SaveBtnClick {
-            get {
+        public ICommand SaveBtnClick
+        {
+            get
+            {
                 if (saveBtnClick == null)
+                {
                     saveBtnClick = new RelayCommand(param => SaveChanges(param), param => true);
+                }
+
                 return saveBtnClick;
             }
             set { saveBtnClick = value; }
@@ -314,26 +370,36 @@ namespace DialogueManager.ViewModels
                 string msg = "Audio clip saved.";
                 if (SelectedAudioClip == null)
                 {
-                    SelectedAudioClip = new AudioClip(); 
+                    SelectedAudioClip = new AudioClip();
                     newAudioClip = true;
-                } 
+                }
                 SelectedAudioClip.Label = AudioClipLabel;
                 SelectedAudioClip.StateText = AudioClipText;
                 SelectedAudioClip.StateAudioFile = Path.Combine(AudioFileDirectory, AudioFileName);
                 SelectedAudioClip.Category = SelectedCategory;
                 SelectedAudioClip.IsVisible = ClipVisibility.Equals("Visible") ? true : false;
                 if (SelectedAudioClip.IsVisible)
+                {
                     SelectedAudioClip.ButtonColour = ButtonColour;
+                }
                 else
+                {
                     SelectedAudioClip.ButtonColour = ColourHelper.HiddenColour;
+                }
+
                 if (newAudioClip)
                 {
                     returnValue = AudioClipsMgr.AddAudioClip(SelectedAudioClip);
                     if (returnValue > 0)
+                    {
                         newAudioClip = false;
+                    }
                 }
                 else
+                {
                     returnValue = AudioClipsMgr.UpdateAudioClipToDB(SelectedAudioClip);
+                }
+
                 if (returnValue > 0)
                 {
                     RefreshAudioClips();
@@ -341,9 +407,14 @@ namespace DialogueManager.ViewModels
                     EventSystem.Publish(new AudioClipsInventoryChanged());
                 }
                 if (returnValue == -1)
+                {
                     msg = "Error: Audio clip label already exists - please choose another label.";
+                }
                 else if (returnValue == -2)
+                {
                     msg = "Error: Problem saving audioClip to database.";
+                }
+
                 var messageWin = new MessageWin("Save Audioclip", msg);
                 messageWin.Show();
             }
@@ -391,7 +462,10 @@ namespace DialogueManager.ViewModels
             }
             AudioClipLabel = btn.Content.ToString();
             if (SelectedAudioClip != null)
+            {
                 ResetColourButtonBorders();
+            }
+
             SelectedAudioClip = AudioClipsMgr.GetAudioClipCopy(AudioClipLabel);
             AudioClipText = SelectedAudioClip.StateText;
             AudioFileName = Path.GetFileName(SelectedAudioClip.StateAudioFile);
@@ -422,10 +496,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand onGenerateBtnClick;
-        public ICommand OnGenerateBtnClick {
-            get {
+        public ICommand OnGenerateBtnClick
+        {
+            get
+            {
                 if (onGenerateBtnClick == null)
+                {
                     onGenerateBtnClick = new RelayCommand(param => GenerateAudioFile(param), param => true);
+                }
+
                 return onGenerateBtnClick;
             }
             set { onGenerateBtnClick = value; }
@@ -438,25 +517,42 @@ namespace DialogueManager.ViewModels
             bool textSet = true;
             AudioFileName = Path.GetFileName(AudioFileName);
             if (String.IsNullOrEmpty(AudioClipText))
+            {
                 textSet = false;
+            }
+
             if (String.IsNullOrEmpty(AudioFileDirectory))
+            {
                 filePathSet = false;
+            }
+
             if (filePathSet && String.IsNullOrEmpty(AudioFileName))
             {
                 if (!String.IsNullOrEmpty(AudioClipLabel))
+                {
                     AudioFileName = AudioClipLabel;
+                }
                 else
+                {
                     filePathSet = false;
+                }
             }
             if (!filePathSet || !textSet)
             {
                 string msg;
                 if (!textSet && !fileNameSet)
+                {
                     msg = "Please complete the directory, filename and audio text fields.";
+                }
                 else if (!textSet)
+                {
                     msg = "Please enter audio text.";
+                }
                 else
+                {
                     msg = "Please complete the directory and filename fields.";
+                }
+
                 var msgWin = new MessageWin("Generate Audio File", msg);
                 msgWin.Show();
                 return;
@@ -492,10 +588,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand browseBtnClick;
-        public ICommand BrowseBtnClick {
-            get {
+        public ICommand BrowseBtnClick
+        {
+            get
+            {
                 if (browseBtnClick == null)
+                {
                     browseBtnClick = new RelayCommand(param => BrowseForAudioClipDirectory(param), param => true);
+                }
+
                 return browseBtnClick;
             }
             set { browseBtnClick = value; }
@@ -507,9 +608,13 @@ namespace DialogueManager.ViewModels
             {
                 dlg.SelectedPath = DirectoryMgr.AudioClipsDirectory;
                 if (!String.IsNullOrEmpty(dlg.SelectedPath))
+                {
                     AudioFileDirectory = dlg.SelectedPath;
+                }
                 else
+                {
                     Logger.AddLogEntry(LogCategory.WARN, String.Format("BrowseForAudioClipDirectory: Directory not selected"));
+                }
             }
         }
 
@@ -517,7 +622,7 @@ namespace DialogueManager.ViewModels
         {
             if (SelectedAudioClip != null)
             {
-                ResetColourButtonBorders(); 
+                ResetColourButtonBorders();
                 switch (btn.Tag)
                 {
                     case "LightBlue":
@@ -543,10 +648,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand onTimeTriggersBtnClick;
-        public ICommand OnTimeTriggersBtnClick {
-            get {
+        public ICommand OnTimeTriggersBtnClick
+        {
+            get
+            {
                 if (onTimeTriggersBtnClick == null)
+                {
                     onTimeTriggersBtnClick = new RelayCommand(param => ConfirmTimeTriggersGeneration(param), param => true);
+                }
+
                 return onTimeTriggersBtnClick;
             }
             set { onTimeTriggersBtnClick = value; }
@@ -567,19 +677,29 @@ namespace DialogueManager.ViewModels
             {
                 MessageWin msgWin;
                 if (AudioFileGenerator.GenerateTimeTriggerAudioFiles())
+                {
                     msgWin = new MessageWin("Generate Time Trigger Clips", "Time Trigger clips generated.");
+                }
                 else
+                {
                     msgWin = new MessageWin("Generate Time Trigger Clips", "Problem generating Time Trigger clips.");
+                }
+
                 msgWin.Show();
             }
             messageDialogWin.Close();
         }
 
         private ICommand onRulesetBtnClick;
-        public ICommand OnRulesetBtnClick {
-            get {
+        public ICommand OnRulesetBtnClick
+        {
+            get
+            {
                 if (onRulesetBtnClick == null)
+                {
                     onRulesetBtnClick = new RelayCommand(param => ConfirmRulesetClipsGeneration(param), param => true);
+                }
+
                 return onRulesetBtnClick;
             }
             set { onRulesetBtnClick = value; }
@@ -600,9 +720,14 @@ namespace DialogueManager.ViewModels
             {
                 MessageWin msgWin;
                 if (AudioFileGenerator.GenerateCommonRulesetAudioFiles())
+                {
                     msgWin = new MessageWin("Generate Common Ruleset Clips", "Common Ruleset Clips generated.");
+                }
                 else
+                {
                     msgWin = new MessageWin("Generate Common Ruleset Clips", "Problem generating Common Ruleset Clips.");
+                }
+
                 msgWin.Show();
             }
             messageDialogWin.Close();

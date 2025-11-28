@@ -74,9 +74,14 @@ namespace DialogueManager.Database
             {
                 string query;
                 if (DBAdmin.TableExists("SETTINGS"))
+                {
                     query = "SELECT * FROM SETTINGS";
+                }
                 else
+                {
                     return null;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(query, dbConnection))
                 {
@@ -88,7 +93,7 @@ namespace DialogueManager.Database
                             {
                                 tempDataTable.Load(reader);
                                 dataTable = tempDataTable;
-                            }    
+                            }
                         }
                     }
                 }

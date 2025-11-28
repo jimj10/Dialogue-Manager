@@ -60,13 +60,23 @@ namespace DialogueManager.Database
                         cmd.Parameters.Add(new SQLiteParameter("@ruleNumber", DbType.Int32) { Value = rule.RuleNumber });
                         cmd.Parameters.Add(new SQLiteParameter("@deviceName", DbType.String) { Value = rule.DeviceName });
                         if (rule.TriggerClip != null)
+                        {
                             cmd.Parameters.Add(new SQLiteParameter("@triggerLabel", DbType.String) { Value = rule.TriggerClip.Label });
+                        }
                         else
+                        {
                             cmd.Parameters.Add(new SQLiteParameter("@triggerLabel", DbType.String) { Value = null });
+                        }
+
                         if (rule.ActionClip != null)
+                        {
                             cmd.Parameters.Add(new SQLiteParameter("@actionLabel", DbType.String) { Value = rule.ActionClip.Label });
+                        }
                         else
+                        {
                             cmd.Parameters.Add(new SQLiteParameter("@actionLabel", DbType.String) { Value = null });
+                        }
+
                         updatedRows = cmd.ExecuteNonQuery();
                         trans.Commit();
                     }
@@ -120,13 +130,23 @@ namespace DialogueManager.Database
                             cmd.Parameters.Add(new SQLiteParameter("@ruleNumber", DbType.Int32) { Value = rule.RuleNumber });
                             cmd.Parameters.Add(new SQLiteParameter("@deviceName", DbType.String) { Value = rule.DeviceName });
                             if (rule.TriggerClip != null)
+                            {
                                 cmd.Parameters.Add(new SQLiteParameter("@triggerLabel", DbType.String) { Value = rule.TriggerClip.Label });
+                            }
                             else
+                            {
                                 cmd.Parameters.Add(new SQLiteParameter("@triggerLabel", DbType.String) { Value = null });
+                            }
+
                             if (rule.ActionClip != null)
+                            {
                                 cmd.Parameters.Add(new SQLiteParameter("@actionLabel", DbType.String) { Value = rule.ActionClip.Label });
+                            }
                             else
+                            {
                                 cmd.Parameters.Add(new SQLiteParameter("@actionLabel", DbType.String) { Value = null });
+                            }
+
                             updatedRows += cmd.ExecuteNonQuery();
                         }
                         trans.Commit();
@@ -142,7 +162,10 @@ namespace DialogueManager.Database
             using (SQLiteConnection dbConnection = DBAdmin.GetSQLConnection())
             {
                 if (!DBAdmin.TableExists("RULESET_RULES"))
+                {
                     return null;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(dbConnection))
                 {
@@ -156,7 +179,7 @@ namespace DialogueManager.Database
                             {
                                 tempDataTable.Load(reader);
                                 dataTable = tempDataTable;
-                            }  
+                            }
                         }
                     }
                 }
@@ -195,16 +218,27 @@ namespace DialogueManager.Database
                                 DeviceName = deviceName
                             };
                             if (triggerLabel != null)
+                            {
                                 rule.TriggerClip = AudioClipsMgr.GetAudioClip(triggerLabel);
+                            }
+
                             if (rule.TriggerClip == null) // if null, it's a TimeTrigger
+                            {
                                 rule.TriggerClip = AudioClipsMgr.GetTimeTriggerClip(triggerLabel);
+                            }
+
                             if (actionLabel != null)
+                            {
                                 rule.ActionClip = AudioClipsMgr.GetAudioClip(actionLabel);
+                            }
+
                             rules.Add(rule);
                         }
                         else
+                        {
                             Logger.AddLogEntry(LogCategory.ERROR,
                                 String.Format("LoadActiveRulesFromDB: Could not parse entry for ruleNumber {0}", ruleNumberStr));
+                        }
                     }
                     Logger.AddLogEntry(LogCategory.INFO, "Active Rules Loaded");
                     return true;

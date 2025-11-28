@@ -7,15 +7,15 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  */
-using System;
-using System.IO;
+using DialogueManager.Database;
+using DialogueManager.EventLog;
+using DialogueManager.Models;
+using DialogueManager.Views;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
-using DialogueManager.EventLog;
+using System;
 using System.Collections.Generic;
-using DialogueManager.Views;
-using DialogueManager.Models;
-using DialogueManager.Database;
+using System.IO;
 
 namespace DialogueManager
 {
@@ -26,24 +26,31 @@ namespace DialogueManager
         private static string voice = "en-GB-Wavenet-C";
         private static SsmlVoiceGender Gender = SsmlVoiceGender.Female;
 
-        public static string Voice {
+        public static string Voice
+        {
             get { return voice; }
-            set {
+            set
+            {
                 if (value != null)
                 {
                     if (value.EndsWith("(female)"))
+                    {
                         Gender = SsmlVoiceGender.Female;
+                    }
                     else
+                    {
                         Gender = SsmlVoiceGender.Male;
-                    voice = value.Substring(0, value.IndexOf("(") -1);
+                    }
+
+                    voice = value.Substring(0, value.IndexOf("(") - 1);
                 }
             }
         }
 
         public static bool OnlineVoicesLoaded { get; set; } = false;
 
-        public static string LanguageCode { get; set;} = "en-GB";
-        
+        public static string LanguageCode { get; set; } = "en-GB";
+
         private static string GetCredentialsFile()
         {
             string credentialsFile = Settings.CredentialsFile;
@@ -93,7 +100,7 @@ namespace DialogueManager
                         {
                             AudioEncoding = AudioEncoding.Mp3,
                             SpeakingRate = (float?)0.95, // default speed set to 0.95
-                        SampleRateHertz = 24000
+                            SampleRateHertz = 24000
                         }
                     );
                     }
@@ -148,7 +155,7 @@ namespace DialogueManager
                             {
                                 AudioEncoding = AudioEncoding.Mp3,
                                 SpeakingRate = (float?)(0.95 * AudioMgr.SpeedRatio),  // default speed set to 0.95
-                            SampleRateHertz = 24000
+                                SampleRateHertz = 24000
                             }
                         );
                         }
@@ -190,7 +197,9 @@ namespace DialogueManager
                             int index = voice.Name.IndexOf('-', voice.Name.IndexOf('-') + 1);
                             string languageCode = voice.Name.Substring(0, index);
                             if (!LanguageCodes.Contains(languageCode))
+                            {
                                 LanguageCodes.Add(languageCode);
+                            }
                         }
                     }
                 }
@@ -203,7 +212,9 @@ namespace DialogueManager
                     messageWin.Show();
                 }
                 if (Voices != null)
+                {
                     OnlineVoicesTableMgr.SaveOnlineVoicesToDB(Voices);
+                }
             }
         }
 
@@ -218,7 +229,9 @@ namespace DialogueManager
                     int index = voice.IndexOf('-', voice.IndexOf('-') + 1);
                     string languageCode = voice.Substring(0, index);
                     if (!LanguageCodes.Contains(languageCode))
+                    {
                         LanguageCodes.Add(languageCode);
+                    }
                 }
                 if (voices.Count > 0)
                 {
@@ -235,13 +248,18 @@ namespace DialogueManager
         {
             List<string> voices = new List<string>();
             if (Voices == null || refresh)
+            {
                 LoadOnlineVoices();
+            }
+
             if (Voices != null)
             {
                 foreach (var voice in Voices)
                 {
                     if (voice.StartsWith(languageCode))
+                    {
                         voices.Add(voice);
+                    }
                 }
             }
             return voices;
@@ -250,7 +268,10 @@ namespace DialogueManager
         public static List<string> GetLanguageCodes()
         {
             if (LanguageCodes == null)
+            {
                 LoadOnlineVoices();
+            }
+
             return LanguageCodes;
         }
     }

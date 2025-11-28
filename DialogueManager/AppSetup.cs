@@ -24,7 +24,9 @@ namespace DialogueManager
         {
             DirectoryMgr.SetAppDirectories();
             if (DBAdmin.DefaultDatabaseExists())
+            {
                 LoadDatabaseTables();
+            }
             else
             {
                 CreateDatabaseTables();
@@ -32,7 +34,10 @@ namespace DialogueManager
             }
             // Check audio files exist for loaded audioclips
             if (Settings.CheckAudioFiles)
+            {
                 Task.Factory.StartNew(() => AudioFileAuditor.CheckAudioFiles());
+            }
+
             return true;
         }
 
@@ -52,7 +57,10 @@ namespace DialogueManager
         {
             string filename = DBAdmin.CreateDBFile();
             if (EventLogTableMgr.CreateEventLogDBTable())
+            {
                 Logger.AddLogEntry(LogCategory.INFO, "Created Database file \'" + filename + "\'.");
+            }
+
             SettingsTableMgr.CreateSettingsDBTable();
             AudioClipsTableMgr.CreateAudioClipsDBTable();
             TimeTriggerClipsTableMgr.CreateTimeTriggerClipsDBTable();

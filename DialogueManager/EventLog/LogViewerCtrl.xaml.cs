@@ -13,7 +13,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace DialogueManager.EventLog
@@ -37,9 +36,14 @@ namespace DialogueManager.EventLog
         public void AddLogEntry(LogEntry logEntry)
         {
             if (displayLatestFirst)
+            {
                 Dispatcher.BeginInvoke((Action)(() => LogEntries.Insert(0, logEntry)));
+            }
             else
+            {
                 Dispatcher.BeginInvoke((Action)(() => LogEntries.Add(logEntry)));
+            }
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LogEntries)));
         }
     }

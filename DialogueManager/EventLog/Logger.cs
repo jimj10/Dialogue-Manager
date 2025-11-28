@@ -45,7 +45,10 @@ namespace DialogueManager.EventLog
             if (dataTable != null)
             {
                 if (dataTable.Rows.Count > MaxLogEntries)
+                {
                     dataTable = TrimLogEntries(dataTable);
+                }
+
                 int eventId = 0;
                 foreach (DataRow dr in dataTable.Rows)
                 {
@@ -61,15 +64,20 @@ namespace DialogueManager.EventLog
                         });
                     }
                     else
+                    {
                         return false;
+                    }
                 }
                 Index = eventId + 1; // set index to next eventId
             }
             else
+            {
                 return false;
+            }
+
             return true;
-        } 
-        
+        }
+
         private static DataTable TrimLogEntries(DataTable dataTable)
         {
             DataTable trimmedLog = null;
@@ -87,14 +95,14 @@ namespace DialogueManager.EventLog
                     dataTable.Rows[i]["Category"], dataTable.Rows[i]["Message"] });
                 }
                 trimmedLog = tempLog;
-            } 
+            }
             EventLogTableMgr.SaveTrimmedLogToDB(trimmedLog);
             return trimmedLog;
         }
 
         public static DataTable GetLogEntries(DateTime startDateTime, DateTime endDateTime)
         {
-            
+
             DataTable fullLogTable = EventLogTableMgr.GetEventLog();
             DataTable filteredlog = null;
             using (var tempLog = new DataTable())
@@ -109,8 +117,10 @@ namespace DialogueManager.EventLog
                 {
                     dateTime = DateTime.Parse(fullLogTable.Rows[i]["TimeStamp"].ToString());
                     if (dateTime >= startDateTime && dateTime <= endDateTime)
+                    {
                         tempLog.Rows.Add(new Object[] { count++.ToString(), fullLogTable.Rows[i]["TimeStamp"],
                         fullLogTable.Rows[i]["Category"], fullLogTable.Rows[i]["Message"] });
+                    }
                 }
                 filteredlog = tempLog;
             }
@@ -126,12 +136,16 @@ namespace DialogueManager.EventLog
                 if (attribute != null)
                 {
                     if (attribute.Description == description)
+                    {
                         return (LogCategory)field.GetValue(null);
+                    }
                 }
                 else
                 {
                     if (field.Name == description)
+                    {
                         return (LogCategory)field.GetValue(null);
+                    }
                 }
             }
             throw new ArgumentException("Not found.", nameof(description));

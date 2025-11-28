@@ -13,7 +13,7 @@ namespace DialogueManager
     static class ColourHelper
     {
         public const string TitleColour = "#FF3588A5";
-        
+
         // Button Colours
         public const string StatementColour = "#FFA0D6FA";
         public const string StatementSelectedColour = "#FF89B7D6";

@@ -28,8 +28,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand audioclipsMenuClick;
-        public ICommand AudioclipsMenuClick {
-            get {
+        public ICommand AudioclipsMenuClick
+        {
+            get
+            {
                 audioclipsMenuClick = audioclipsMenuClick ?? new RelayCommand(param => DisplayAudioclipsAdminView(param), param => true);
                 return audioclipsMenuClick;
             }
@@ -40,12 +42,14 @@ namespace DialogueManager.ViewModels
         {
             audioclipsAdminView = audioclipsAdminView ?? new AudioclipsAdminView();
             TabMgr.AddOrSelectTabItem("Audio clips", "AudiclipsAdminGrid", 1, audioclipsAdminView);
-            
+
         }
 
         private ICommand sessionsMenuClick;
-        public ICommand SessionsMenuClick {
-            get {
+        public ICommand SessionsMenuClick
+        {
+            get
+            {
                 sessionsMenuClick = sessionsMenuClick ?? new RelayCommand(param => DisplaySessionsAdminView(param), param => true);
                 return sessionsMenuClick;
             }
@@ -59,8 +63,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand settingsMenuClick;
-        public ICommand SettingsMenuClick {
-            get {
+        public ICommand SettingsMenuClick
+        {
+            get
+            {
                 settingsMenuClick = settingsMenuClick ?? new RelayCommand(param => DisplaySettingsView(param), param => true);
                 return settingsMenuClick;
             }
@@ -74,8 +80,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand eventLogMenuClick;
-        public ICommand EventLogMenuClick {
-            get {
+        public ICommand EventLogMenuClick
+        {
+            get
+            {
                 eventLogMenuClick = eventLogMenuClick ?? new RelayCommand(param => DisplayEventLog(param), param => true);
                 return eventLogMenuClick;
             }
@@ -89,8 +97,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand aboutMenuClick;
-        public ICommand AboutMenuClick {
-            get {
+        public ICommand AboutMenuClick
+        {
+            get
+            {
                 aboutMenuClick = aboutMenuClick ?? new RelayCommand(param => DisplayAboutWindow(param), param => true);
                 return aboutMenuClick;
             }
@@ -100,7 +110,10 @@ namespace DialogueManager.ViewModels
         private void DisplayAboutWindow(object obj)
         {
             if (aboutWindow != null)
+            {
                 aboutWindow.Close();
+            }
+
             aboutWindow = new AboutWindow();
             aboutWindow.Show();
         }

@@ -16,14 +16,16 @@ using System.Globalization;
 
 namespace DialogueManager.EventLog
 {
-    
+
 
     public class LogEntry : PropertyChangedBase
     {
         public DateTime EntryDateTime { get; set; }
 
-        public string Timestamp {
-            get {
+        public string Timestamp
+        {
+            get
+            {
                 return String.Format("{0} {1}",
                      EntryDateTime.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern), EntryDateTime.ToString("HH:mm:ss"));
             }

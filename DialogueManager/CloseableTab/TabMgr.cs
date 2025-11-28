@@ -102,9 +102,15 @@ namespace DialogueManager
             {
                 TabControl.Items.Remove(tab);
                 if (tab.UserCtrl1 != null)
+                {
                     tab.TabGrid.Children.Remove(tab.UserCtrl1);
+                }
+
                 if (tab.UserCtrl2 != null)
+                {
                     tab.TabGrid.Children.Remove(tab.UserCtrl2);
+                }
+
                 TabItems.Remove(tab);
                 tab = null;
             }

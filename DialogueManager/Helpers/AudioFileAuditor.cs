@@ -23,9 +23,14 @@ namespace DialogueManager
             Logger.AddLogEntry(LogCategory.INFO, "Checking audio files...");
             bool allOK = true;
             if (!AudioClipsMgr.CheckAudioFiles())
+            {
                 allOK = false;
+            }
+
             if (allOK)
+            {
                 Logger.AddLogEntry(LogCategory.INFO, "Audio files OK");
+            }
             else
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>

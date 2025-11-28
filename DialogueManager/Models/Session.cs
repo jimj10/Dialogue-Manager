@@ -8,7 +8,6 @@
  * 
  */
 
-using DialogueManager.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +25,16 @@ namespace DialogueManager.Models
 
         public List<int> SessionAudioClipsList { get; set; } = new List<int>();
 
-        public bool IsRuleset { get; set; } 
+        public bool IsRuleset { get; set; }
 
         public Ruleset Ruleset { get; set; }
 
         private bool castDisplayEnabled;
-        public bool CastDisplayEnabled {
+        public bool CastDisplayEnabled
+        {
             get { return castDisplayEnabled; }
-            set {
+            set
+            {
                 castDisplayEnabled = value;
                 EventSystem.Publish(new EnableCastDisplayChanged() { SessionName = this.SessionName, CastEnable = castDisplayEnabled });
             }
@@ -49,10 +50,13 @@ namespace DialogueManager.Models
             if (!SessionAudioClipsList.Any(x => x == clipId))
             {
                 if (position == -1)
+                {
                     SessionAudioClipsList.Add(clipId);
+                }
                 else
+                {
                     SessionAudioClipsList.Insert(position, clipId);
-              
+                }
             }
             return false;
         }

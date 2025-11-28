@@ -35,20 +35,24 @@ namespace DialogueManager.ViewModels
         public ICollectionView AudioClipsView { get; private set; }
 
         private string screenTitle = "Standard Dashboard";
-        public string ScreenTitle {
+        public string ScreenTitle
+        {
             get { return screenTitle; }
-            set {
+            set
+            {
                 screenTitle = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScreenTitle)));
             }
         }
 
         public string DeviceName { get; set; }
-        
+
         private bool statePlayBtnEnabled = true;
-        public bool StatePlayBtnEnabled {
+        public bool StatePlayBtnEnabled
+        {
             get { return statePlayBtnEnabled; }
-            set {
+            set
+            {
                 if (value != statePlayBtnEnabled)
                 {
                     statePlayBtnEnabled = value;
@@ -58,9 +62,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool confirmPlayBtnEnabled = true;
-        public bool ConfirmPlayBtnEnabled {
+        public bool ConfirmPlayBtnEnabled
+        {
             get { return confirmPlayBtnEnabled; }
-            set {
+            set
+            {
                 if (value != confirmPlayBtnEnabled)
                 {
                     confirmPlayBtnEnabled = value;
@@ -70,9 +76,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool checkPlayBtnEnabled = true;
-        public bool CheckPlayBtnEnabled {
+        public bool CheckPlayBtnEnabled
+        {
             get { return checkPlayBtnEnabled; }
-            set {
+            set
+            {
                 if (value != checkPlayBtnEnabled)
                 {
                     checkPlayBtnEnabled = value;
@@ -82,9 +90,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool rulesetComponentsEnabled = true;
-        public bool RulesetComponentsEnabled {
+        public bool RulesetComponentsEnabled
+        {
             get { return rulesetComponentsEnabled; }
-            set {
+            set
+            {
                 if (value != rulesetComponentsEnabled)
                 {
                     rulesetComponentsEnabled = value;
@@ -94,9 +104,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool playBtnEnabled = true;
-        public bool PlayBtnEnabled {
+        public bool PlayBtnEnabled
+        {
             get { return playBtnEnabled; }
-            set {
+            set
+            {
                 if (value != playBtnEnabled)
                 {
                     playBtnEnabled = value;
@@ -106,9 +118,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool audioTextBoxIsReadOnly = true;
-        public bool AudioTextBoxIsReadOnly {
+        public bool AudioTextBoxIsReadOnly
+        {
             get { return audioTextBoxIsReadOnly; }
-            set {
+            set
+            {
                 if (value != audioTextBoxIsReadOnly)
                 {
                     audioTextBoxIsReadOnly = value;
@@ -117,14 +131,21 @@ namespace DialogueManager.ViewModels
             }
         }
 
-        public bool KeepAlive {
+        public bool KeepAlive
+        {
             get { return AudioMgr.KeepAlive; }
-            set {
+            set
+            {
                 AudioMgr.KeepAlive = value;
                 if (AudioMgr.KeepAlive)
+                {
                     KeepAliveOnBtnVisibility = Visibility.Visible;
+                }
                 else
+                {
                     KeepAliveOnBtnVisibility = Visibility.Collapsed;
+                }
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(KeepAlive)));
                 if (CurrentSession != null)
                 {
@@ -135,102 +156,146 @@ namespace DialogueManager.ViewModels
         }
 
         private Visibility keepAliveOnBtnVisibility = Visibility.Visible;
-        public Visibility KeepAliveOnBtnVisibility {
+        public Visibility KeepAliveOnBtnVisibility
+        {
             get { return keepAliveOnBtnVisibility; }
-            set {
+            set
+            {
                 keepAliveOnBtnVisibility = value;
                 if (keepAliveOnBtnVisibility == Visibility.Visible)
+                {
                     KeepAliveOffBtnVisibility = Visibility.Collapsed;
+                }
                 else
+                {
                     KeepAliveOffBtnVisibility = Visibility.Visible;
+                }
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(KeepAliveOnBtnVisibility)));
             }
         }
 
         private Visibility keepAliveOffBtnVisibility = Visibility.Visible;
-        public Visibility KeepAliveOffBtnVisibility {
+        public Visibility KeepAliveOffBtnVisibility
+        {
             get { return keepAliveOffBtnVisibility; }
-            set {
+            set
+            {
                 if (value != keepAliveOffBtnVisibility)
                 {
                     keepAliveOffBtnVisibility = value;
                     if (keepAliveOffBtnVisibility == Visibility.Visible)
+                    {
                         KeepAliveOnBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         KeepAliveOnBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(KeepAliveOffBtnVisibility)));
                 }
             }
         }
 
         private Visibility audioOnBtnVisibility = Visibility.Visible;
-        public Visibility AudioOnBtnVisibility {
+        public Visibility AudioOnBtnVisibility
+        {
             get { return audioOnBtnVisibility; }
-            set {
+            set
+            {
                 if (value != audioOnBtnVisibility)
                 {
                     audioOnBtnVisibility = value;
                     if (audioOnBtnVisibility == Visibility.Visible)
+                    {
                         AudioOffBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         AudioOffBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioOnBtnVisibility)));
                 }
             }
         }
 
         private Visibility audioOffBtnVisibility = Visibility.Collapsed;
-        public Visibility AudioOffBtnVisibility {
+        public Visibility AudioOffBtnVisibility
+        {
             get { return audioOffBtnVisibility; }
-            set {
+            set
+            {
                 if (value != audioOffBtnVisibility)
                 {
                     audioOffBtnVisibility = value;
                     if (audioOffBtnVisibility == Visibility.Visible)
+                    {
                         AudioOnBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         AudioOnBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioOffBtnVisibility)));
                 }
             }
         }
 
         private Visibility castOnBtnVisibility = Visibility.Collapsed;
-        public Visibility CastOnBtnVisibility {
+        public Visibility CastOnBtnVisibility
+        {
             get { return castOnBtnVisibility; }
-            set {
+            set
+            {
                 if (value != castOnBtnVisibility)
                 {
                     castOnBtnVisibility = value;
                     if (castOnBtnVisibility == Visibility.Visible)
+                    {
                         CastOffBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         CastOffBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CastOnBtnVisibility)));
                 }
             }
         }
 
         private Visibility castOffBtnVisibility = Visibility.Visible;
-        public Visibility CastOffBtnVisibility {
+        public Visibility CastOffBtnVisibility
+        {
             get { return castOffBtnVisibility; }
-            set {
+            set
+            {
                 if (value != castOffBtnVisibility)
                 {
                     castOffBtnVisibility = value;
                     if (castOffBtnVisibility == Visibility.Visible)
+                    {
                         CastOnBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         CastOnBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CastOffBtnVisibility)));
                 }
             }
         }
 
         private Visibility playRuleBtnVisibility = Visibility.Collapsed;
-        public Visibility PlayRuleBtnVisibility {
+        public Visibility PlayRuleBtnVisibility
+        {
             get { return playRuleBtnVisibility; }
-            set {
+            set
+            {
                 if (value != playRuleBtnVisibility)
                 {
                     playRuleBtnVisibility = value;
@@ -240,9 +305,11 @@ namespace DialogueManager.ViewModels
         }
 
         private Visibility playBtnVisibility = Visibility.Visible;
-        public Visibility PlayBtnVisibility {
+        public Visibility PlayBtnVisibility
+        {
             get { return playBtnVisibility; }
-            set {
+            set
+            {
                 if (value != playBtnVisibility)
                 {
                     playBtnVisibility = value;
@@ -252,9 +319,11 @@ namespace DialogueManager.ViewModels
         }
 
         private Visibility startRecordingBtnVisibility = Visibility.Visible;
-        public Visibility StartRecordingBtnVisibility {
+        public Visibility StartRecordingBtnVisibility
+        {
             get { return startRecordingBtnVisibility; }
-            set {
+            set
+            {
                 if (value != startRecordingBtnVisibility)
                 {
                     startRecordingBtnVisibility = value;
@@ -264,9 +333,11 @@ namespace DialogueManager.ViewModels
         }
 
         private Visibility stopRecordingBtnVisibility = Visibility.Collapsed;
-        public Visibility StopRecordingBtnVisibility {
+        public Visibility StopRecordingBtnVisibility
+        {
             get { return stopRecordingBtnVisibility; }
-            set {
+            set
+            {
                 if (value != stopRecordingBtnVisibility)
                 {
                     stopRecordingBtnVisibility = value;
@@ -276,9 +347,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool recordingEnabled = false;
-        public bool RecordingEnabled {
+        public bool RecordingEnabled
+        {
             get { return recordingEnabled; }
-            set {
+            set
+            {
                 if (value != recordingEnabled)
                 {
                     recordingEnabled = value;
@@ -288,64 +361,92 @@ namespace DialogueManager.ViewModels
         }
 
         private Visibility offlineBtnVisibility = Visibility.Visible;
-        public Visibility OfflineBtnVisibility {
+        public Visibility OfflineBtnVisibility
+        {
             get { return offlineBtnVisibility; }
-            set {
+            set
+            {
                 if (value != offlineBtnVisibility)
                 {
                     offlineBtnVisibility = value;
                     if (offlineBtnVisibility == Visibility.Visible)
+                    {
                         OnlineBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         OnlineBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OfflineBtnVisibility)));
                 }
             }
         }
 
         private Visibility onlineBtnVisibility = Visibility.Collapsed;
-        public Visibility OnlineBtnVisibility {
+        public Visibility OnlineBtnVisibility
+        {
             get { return onlineBtnVisibility; }
-            set {
+            set
+            {
                 if (value != onlineBtnVisibility)
                 {
                     onlineBtnVisibility = value;
                     if (onlineBtnVisibility == Visibility.Visible)
+                    {
                         OfflineBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         OfflineBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OnlineBtnVisibility)));
                 }
             }
         }
 
         private Visibility aMBtnVisibility = Visibility.Visible;
-        public Visibility AMBtnVisibility {
+        public Visibility AMBtnVisibility
+        {
             get { return aMBtnVisibility; }
-            set {
+            set
+            {
                 if (value != aMBtnVisibility)
                 {
                     aMBtnVisibility = value;
                     if (aMBtnVisibility == Visibility.Visible)
+                    {
                         PMBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         PMBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AMBtnVisibility)));
                 }
             }
         }
 
         private Visibility pMBtnVisibility = Visibility.Collapsed;
-        public Visibility PMBtnVisibility {
+        public Visibility PMBtnVisibility
+        {
             get { return pMBtnVisibility; }
-            set {
+            set
+            {
                 if (value != pMBtnVisibility)
                 {
                     pMBtnVisibility = value;
                     if (pMBtnVisibility == Visibility.Visible)
+                    {
                         AMBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         AMBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PMBtnVisibility)));
                 }
             }
@@ -354,9 +455,11 @@ namespace DialogueManager.ViewModels
         public DateTime SelectedTime { get; set; }
 
         private bool timeTriggerChecked = true;
-        public bool TimeTriggerChecked {
+        public bool TimeTriggerChecked
+        {
             get { return timeTriggerChecked; }
-            set {
+            set
+            {
                 timeTriggerChecked = value;
                 UpdateSelectedTime();
                 AudioClipsView.Refresh();
@@ -366,18 +469,22 @@ namespace DialogueManager.ViewModels
         public List<string> DaysList { get; set; } = new List<string>(2) { "Today", "Every Day" };
 
         private string selectedDays = "Today";
-        public string SelectedDays {
+        public string SelectedDays
+        {
             get { return selectedDays; }
-            set {
+            set
+            {
                 selectedDays = value;
                 UpdateSelectedTime();
             }
         }
 
         private bool amSelected = true;
-        public bool AMSelected {
+        public bool AMSelected
+        {
             get { return amSelected; }
-            set {
+            set
+            {
                 if (value != amSelected)
                 {
                     amSelected = value;
@@ -388,9 +495,11 @@ namespace DialogueManager.ViewModels
         }
 
         private string hourTextStr = "06";
-        public string HourTextStr {
+        public string HourTextStr
+        {
             get { return hourTextStr; }
-            set {
+            set
+            {
                 if (value != hourTextStr)
                 {
                     if (Int32.TryParse(value, out int selectedhour))
@@ -410,9 +519,11 @@ namespace DialogueManager.ViewModels
         }
 
         private string minuteTextStr = "00";
-        public string MinuteTextStr {
+        public string MinuteTextStr
+        {
             get { return minuteTextStr; }
-            set {
+            set
+            {
                 if (value != minuteTextStr)
                 {
                     if (Int32.TryParse(value, out int selectedMinute))
@@ -425,30 +536,35 @@ namespace DialogueManager.ViewModels
                                 UpdateSelectedTime();
                                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MinuteTextStr)));
                             }
-                        }    
+                        }
                     }
                 }
             }
         }
 
         private ObservableCollection<string> ruleNumbers = new ObservableCollection<string>(new List<string>(2) { "New" });
-        public ObservableCollection<string> RuleNumbers {
+        public ObservableCollection<string> RuleNumbers
+        {
             get { return ruleNumbers; }
-            set {
+            set
+            {
                 ruleNumbers = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RuleNumbers)));
             }
         }
 
-        public ObservableCollection<string> SessionNames {
+        public ObservableCollection<string> SessionNames
+        {
             get { return new ObservableCollection<string>(SessionsMgr.GetSessionNames()); }
         }
 
         private int SelectedRuleNumber = -1; // -1 when "New" rule selected
         private string selectedRuleNumberStr = "New";
-        public string SelectedRuleNumberStr {
+        public string SelectedRuleNumberStr
+        {
             get { return selectedRuleNumberStr; }
-            set {
+            set
+            {
                 if (value != selectedRuleNumberStr)
                 {
                     selectedRuleNumberStr = value ?? "New";
@@ -460,14 +576,22 @@ namespace DialogueManager.ViewModels
                         }
                     }
                     else
+                    {
                         SelectedRuleNumber = -1;
+                    }
+
                     if (AudioClipSelected && ActiveAudioClip.Label.Equals("OK, rule deleted"))
+                    {
                         ActiveRuleset.UpdateRuleDeletedAudioClip(SelectedRuleNumber);
+                    }
                     else if (SelectedRuleNumberStr.Equals("New") && ActiveRule.Complete)
+                    {
                         DuplicateAndConflictCheck();
+                    }
+
                     DisplayAudioText(CurrentActivity);
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRuleNumberStr)));
-                }     
+                }
             }
         }
 
@@ -477,46 +601,58 @@ namespace DialogueManager.ViewModels
         public string CastText
         {
             get { return rulesetText; }
-            set {
+            set
+            {
                 rulesetText = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CastText)));
             }
         }
 
         private SolidColorBrush audioTextColour = new SolidColorBrush(Colors.Black);
-        public SolidColorBrush AudioTextColour {
+        public SolidColorBrush AudioTextColour
+        {
             get { return audioTextColour; }
-            set {
+            set
+            {
                 audioTextColour = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioTextColour)));
             }
         }
 
         private SolidColorBrush castTextColour = new SolidColorBrush(Colors.White);
-        public SolidColorBrush CastTextColour {
+        public SolidColorBrush CastTextColour
+        {
             get { return castTextColour; }
-            set {
+            set
+            {
                 castTextColour = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CastTextColour)));
             }
         }
 
         private string audioText = String.Empty;
-        public string AudioText {
+        public string AudioText
+        {
             get { return audioText; }
-            set {
+            set
+            {
                 audioText = value;
                 if (AudioTextUpdating)
+                {
                     AudioTextUpdated = true;
+                }
+
                 PlayBtnEnabled = !String.IsNullOrEmpty(audioText);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AudioText)));
             }
         }
 
         private string sessionName;
-        public string SessionName {
+        public string SessionName
+        {
             get { return sessionName; }
-            set {
+            set
+            {
                 if (sessionName != value)
                 {
                     sessionName = value;
@@ -531,9 +667,11 @@ namespace DialogueManager.ViewModels
         public string MaxSpeedRatioStr { get; } = "1.2";
 
         private double speedRatio = 1.0;
-        public double SpeedRatio {
+        public double SpeedRatio
+        {
             get { return speedRatio; }
-            set {
+            set
+            {
                 if (speedRatio != value)
                 {
                     speedRatio = value;
@@ -548,24 +686,28 @@ namespace DialogueManager.ViewModels
         }
 
         private bool duplicateCheck;
-        public bool DuplicateCheck {
+        public bool DuplicateCheck
+        {
             get { return duplicateCheck; }
-            set {
+            set
+            {
                 duplicateCheck = value;
                 if (CurrentSession != null)
                 {
                     CurrentSession.Ruleset.CheckDuplicates = duplicateCheck;
                     AudioClipsView.Refresh();
                 }
-                    
+
 
             }
         }
 
         private bool conflictCheck;
-        public bool ConflictCheck {
+        public bool ConflictCheck
+        {
             get { return conflictCheck; }
-            set {
+            set
+            {
                 conflictCheck = value;
                 if (CurrentSession != null)
                 {
@@ -576,9 +718,11 @@ namespace DialogueManager.ViewModels
         }
 
         private bool castDisplayEnabled;
-        public bool CastDisplayEnabled {
+        public bool CastDisplayEnabled
+        {
             get { return castDisplayEnabled; }
-            set {
+            set
+            {
                 if (castDisplayEnabled != value)
                 {
                     castDisplayEnabled = value;
@@ -587,7 +731,10 @@ namespace DialogueManager.ViewModels
                     if (castDisplayEnabled)
                     {
                         if (CastDisplay == null)
+                        {
                             CastDisplay = new DisplayWinView();
+                        }
+
                         CastDisplay.Show();
                         CastOnBtnVisibility = Visibility.Collapsed;
                         CastOffBtnVisibility = Visibility.Visible;
@@ -602,7 +749,7 @@ namespace DialogueManager.ViewModels
                         CastOffBtnVisibility = Visibility.Visible;
                     }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CastDisplayEnabled)));
-                }  
+                }
             }
         }
 
@@ -627,9 +774,14 @@ namespace DialogueManager.ViewModels
         public DashboardViewModel()
         {
             if (AudioMgr.RecordingDeviceExists)
+            {
                 RecordingEnabled = true;
+            }
             else
+            {
                 RecordingEnabled = false;
+            }
+
             CreateNewActiveRule();
             if (SessionsMgr.SessionsLoaded && SessionsMgr.GetSessionNames().Count > 0)
             {
@@ -637,7 +789,10 @@ namespace DialogueManager.ViewModels
                 ChangeSession(SessionName);
             }
             else
+            {
                 EventSystem.Subscribe<SessionsLoaded>(OnSessionsLoaded);
+            }
+
             EventSystem.Subscribe<AudioMuted>(OnAudioMuted);
             EventSystem.Subscribe<SessionChanged>(OnSessionChanged);
             EventSystem.Subscribe<SessionInventoryChanged>(OnSessionInventoryChanged);
@@ -650,15 +805,27 @@ namespace DialogueManager.ViewModels
         {
             AudioClip audioClip = item as AudioClip;
             if (!audioClip.IsVisible)
+            {
                 return false;
+            }
+
             if (TimeTriggerChecked && audioClip.Category.Equals("Trigger"))
+            {
                 return false;
-            if (!ActiveRuleset.CheckConflicts && audioClip.Label.Equals("Rule conflicts with another rule")) 
+            }
+
+            if (!ActiveRuleset.CheckConflicts && audioClip.Label.Equals("Rule conflicts with another rule"))
+            {
                 return false;
+            }
             else if (!ActiveRuleset.CheckDuplicates && audioClip.Label.Equals("Rule is a duplicate"))
+            {
                 return false;
+            }
             else
+            {
                 return true;
+            }
         }
 
         private void OnSessionsLoaded(SessionsLoaded sl)
@@ -678,13 +845,17 @@ namespace DialogueManager.ViewModels
         private void OnSessionChanged(SessionChanged sc)
         {
             if (sc.SessionName.Equals(SessionName))
+            {
                 ChangeSession(SessionName);
+            }
         }
 
         private void OnSessionInventoryChanged(SessionInventoryChanged sic)
         {
             if (sic.SessionName.Equals(SessionName))
+            {
                 RefreshAudioClips();
+            }
         }
 
         private void OnSessionsInventoryChanged(SessionsInventoryChanged sic)
@@ -815,20 +986,25 @@ namespace DialogueManager.ViewModels
                 {
                     // if single digit between "1" and "5", assume tens of minutes
                     if (selectedMinute > 0 && selectedMinute <= 5 && !minutesStr.StartsWith("0"))
+                    {
                         minuteTextStr = minutesStr + "0";
+                    }
                     else
+                    {
                         minuteTextStr = minutesStr;
+                    }
+
                     UpdateSelectedTime();
                 }
             }
             return MinuteTextStr;
-        } 
+        }
 
         public void LoadTrigger(string label)
         {
             AudioClipSelected = false;
-            SelectedTriggerClip = TimeTriggerChecked 
-                ? AudioClipsMgr.GetTimeTriggerClip(label) 
+            SelectedTriggerClip = TimeTriggerChecked
+                ? AudioClipsMgr.GetTimeTriggerClip(label)
                 : AudioClips?.Where((x) => x.Label.Equals(label)).FirstOrDefault();
             if (SelectedTriggerClip != null)
             {
@@ -843,7 +1019,7 @@ namespace DialogueManager.ViewModels
                     AudioTextColour = new SolidColorBrush(Colors.Black);
                     AudioText = GetAudioText();
                 }
-            }   
+            }
         }
 
         public void LoadAction(string label)
@@ -857,11 +1033,14 @@ namespace DialogueManager.ViewModels
                 if (ActiveRule.Complete)
                 {
                     if (SelectedRuleNumberStr.Equals("New"))
+                    {
                         DuplicateAndConflictCheck();
+                    }
+
                     UpdatePlayBtnsStatus();
                     AudioTextColour = new SolidColorBrush(Colors.Black);
                     AudioText = GetAudioText();
-                }   
+                }
             }
         }
 
@@ -880,7 +1059,10 @@ namespace DialogueManager.ViewModels
                     case "OK, rule deleted":
                         CurrentActivity = "Confirm";
                         if (!SelectedRuleNumberStr.Equals("New"))
+                        {
                             ActiveRuleset.UpdateRuleDeletedAudioClip(SelectedRuleNumber);
+                        }
+
                         StatePlayBtnEnabled = false;
                         ConfirmPlayBtnEnabled = true;
                         CheckPlayBtnEnabled = true;
@@ -912,7 +1094,10 @@ namespace DialogueManager.ViewModels
         {
             CurrentActivity = activity;
             if (!AudioTextUpdating)
+            {
                 AudioText = GetAudioText();
+            }
+
             AudioTextColour = new SolidColorBrush(Colors.Black);
         }
 
@@ -921,9 +1106,15 @@ namespace DialogueManager.ViewModels
             if (TimeTriggerChecked)
             {
                 if (HourTextStr.Length == 1)
+                {
                     HourTextStr = "0" + HourTextStr;
+                }
+
                 if (MinuteTextStr.Length == 1)
+                {
                     MinuteTextStr = "0" + MinuteTextStr;
+                }
+
                 SelectedTimeStr = AMSelected
                     ? HourTextStr + ":" + MinuteTextStr + " AM"
                     : HourTextStr + ":" + MinuteTextStr + " PM";
@@ -933,15 +1124,15 @@ namespace DialogueManager.ViewModels
                             .Replace(" PM", "pm " + SelectedDays.ToLower());
                 triggerText = triggerText.StartsWith("0") ? "At " + triggerText.Substring(1) : "At " + triggerText;
                 LoadTrigger(triggerText);
-            }  
+            }
         }
 
         private bool CheckSelectedTime(string hours, string minutes)
         {
-            string triggerText = AMSelected 
-                ? hours + ":" + minutes + "am " + SelectedDays.ToLower() 
+            string triggerText = AMSelected
+                ? hours + ":" + minutes + "am " + SelectedDays.ToLower()
                 : hours + ":" + minutes + "pm " + SelectedDays.ToLower();
-            triggerText = triggerText.StartsWith("0") 
+            triggerText = triggerText.StartsWith("0")
                 ? "At " + triggerText.Substring(1)
                 : "At " + triggerText;
             return AudioClipsMgr.GetTimeTriggerClip(triggerText) != null ? true : false;
@@ -954,21 +1145,34 @@ namespace DialogueManager.ViewModels
                 StringBuilder sb = new StringBuilder();
                 sb.Append(ActiveRule.GetAudioText(CurrentActivity, SelectedRuleNumber));
                 if (ActiveRuleset.CheckConflicts && ConflictRuleNumber > 0)
+                {
                     sb.Append("\n\n**** CONFLICTS WITH RULE " + ConflictRuleNumber.ToString() + " ****");
+                }
                 else if (ActiveRuleset.CheckDuplicates && DuplicateRuleNumber > 0)
+                {
                     sb.Append("\n\n**** DUPLICATE OF RULE " + DuplicateRuleNumber.ToString() + " ****");
+                }
+
                 return sb.ToString();
             }
             else if (AudioClipSelected && ActiveAudioClip != null)
             {
                 if (ActiveAudioClip.Label.Equals("OK, rule deleted") && SelectedRuleNumberStr.Equals("New"))
+                {
                     return "*** ERROR: Cannot delete a new rule ***";
+                }
                 else if (CurrentActivity.Equals("State"))
+                {
                     return ActiveAudioClip.StateText;
+                }
                 else if (CurrentActivity.Equals("Confirm"))
+                {
                     return ActiveAudioClip.ConfirmText;
+                }
                 else if (CurrentActivity.Equals("Check"))
+                {
                     return ActiveAudioClip.CheckText;
+                }
             }
             return String.Empty;
         }
@@ -990,7 +1194,7 @@ namespace DialogueManager.ViewModels
                 Logger.AddLogEntry(LogCategory.ERROR, msg);
                 var messageWin = new MessageWin("Play Audio", msg);
                 messageWin.Show();
-            }    
+            }
         }
 
         public void PlayAudioClip()
@@ -1000,7 +1204,9 @@ namespace DialogueManager.ViewModels
             {
                 audioFile = GoogleTextToSpeechMgr.GenerateSpeech(AudioText);
                 if (String.IsNullOrEmpty(audioFile))
+                {
                     return; // GenerateSpeech displays error message
+                }
             }
             else if (ActiveAudioClip != null)
             {
@@ -1018,7 +1224,9 @@ namespace DialogueManager.ViewModels
                     }
                 }
                 else if (CurrentActivity.Equals("Check"))
+                {
                     audioFile = ActiveAudioClip.CheckAudioFile;
+                }
             }
             if (File.Exists(audioFile) || File.Exists(audioFile + ".mp3"))
             {
@@ -1078,7 +1286,9 @@ namespace DialogueManager.ViewModels
                 if (SelectedRuleNumberStr.Equals("New"))
                 {
                     if (DuplicateRuleNumber > 0 || ConflictRuleNumber > 0)
+                    {
                         return;
+                    }
                     else
                     {
                         ActiveRuleset.AddRule(ActiveRule);
@@ -1098,7 +1308,10 @@ namespace DialogueManager.ViewModels
                 CastText = ActiveRuleset?.GetRulesetText();
                 UpdateCastDisplayWindow();
                 if (!TimeTriggerChecked)
+                {
                     SelectedTriggerClip = null;
+                }
+
                 SelectedActionClip = null;
 
                 // Clear highlighting on buttons
@@ -1115,14 +1328,14 @@ namespace DialogueManager.ViewModels
                     ActiveTriggerBtn.Foreground = new SolidColorBrush(Colors.Black);
                     ActiveTriggerBtn.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(ColourHelper.ConditionColour));
                     ActiveTriggerBtn = null;
-                } 
+                }
             }
         }
 
         private void UpdatePlayBtnsStatus()
         {
             StatePlayBtnEnabled = true;
-            if ((ActiveRuleset.CheckConflicts && ConflictRuleNumber > 0) 
+            if ((ActiveRuleset.CheckConflicts && ConflictRuleNumber > 0)
                 || (ActiveRuleset.CheckDuplicates && DuplicateRuleNumber > 0))
             {
                 ConfirmPlayBtnEnabled = false;
@@ -1138,9 +1351,14 @@ namespace DialogueManager.ViewModels
         private void DuplicateAndConflictCheck()
         {
             if (ActiveRuleset.CheckDuplicates)
+            {
                 DuplicateRuleNumber = ActiveRuleset.CheckForDuplicates(ActiveRule);
+            }
+
             if (ActiveRuleset.CheckConflicts)
+            {
                 ConflictRuleNumber = ActiveRuleset.CheckForConflicts(ActiveRule);
+            }
         }
 
         public void DisplayCastText(bool cast)
@@ -1148,9 +1366,14 @@ namespace DialogueManager.ViewModels
             ShowCastText = cast;
             CastTextColour = ShowCastText ? new SolidColorBrush(Colors.Orange) : new SolidColorBrush(Colors.White);
             if (ShowCastText)
+            {
                 Logger.AddLogEntry(LogCategory.INFO, String.Format("Rules displayed"));
+            }
             else
+            {
                 Logger.AddLogEntry(LogCategory.INFO, String.Format("Rules hidden"));
+            }
+
             UpdateCastDisplayWindow();
         }
 
@@ -1159,9 +1382,13 @@ namespace DialogueManager.ViewModels
             if (CastDisplay != null)
             {
                 if (CastDisplayEnabled && ShowCastText)
+                {
                     CastDisplay.SetText(CastText);
+                }
                 else
+                {
                     CastDisplay.SetText(String.Empty);
+                }
             }
         }
 
@@ -1184,8 +1411,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand audioBtnClick;
-        public ICommand AudioBtnClick {
-            get {
+        public ICommand AudioBtnClick
+        {
+            get
+            {
                 audioBtnClick = audioBtnClick ?? new RelayCommand(param => DisplayText(param), param => true);
                 return audioBtnClick;
             }
@@ -1201,8 +1430,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand playBtnClick;
-        public ICommand PlayBtnClick {
-            get {
+        public ICommand PlayBtnClick
+        {
+            get
+            {
                 playBtnClick = playBtnClick ?? new RelayCommand(param => PlayClip(param), param => true);
                 return playBtnClick;
             }
@@ -1229,18 +1460,26 @@ namespace DialogueManager.ViewModels
                 if (!AudioMgr.AudioMuted)
                 {
                     if (AudioClipSelected)
+                    {
                         PlayAudioClip();
+                    }
                     else
+                    {
                         PlayRuleAudio();
+                    }
                 }
                 if (CurrentActivity.Equals("Confirm"))
+                {
                     UpdateRules();
+                }
             }
         }
 
         private ICommand chimesBtnClick;
-        public ICommand ChimesBtnClick {
-            get {
+        public ICommand ChimesBtnClick
+        {
+            get
+            {
                 chimesBtnClick = chimesBtnClick ?? new RelayCommand(param => PlayChimes(param), param => true);
                 return chimesBtnClick;
             }
@@ -1250,12 +1489,16 @@ namespace DialogueManager.ViewModels
         public void PlayChimes(object obj)
         {
             if (!AudioMgr.AudioMuted)
+            {
                 AudioMgr.PlayAudioClip(Path.Combine(DirectoryMgr.AudioClipsDirectory, @"Sound Files\Chimes.mp3"));
+            }
         }
 
         private ICommand toggleTimePeriodBtnClick;
-        public ICommand ToggleTimePeriodBtnClick {
-            get {
+        public ICommand ToggleTimePeriodBtnClick
+        {
+            get
+            {
                 toggleTimePeriodBtnClick = toggleTimePeriodBtnClick ?? new RelayCommand(param => ToggleTimePeriod(param), param => true);
                 return toggleTimePeriodBtnClick;
             }
@@ -1265,15 +1508,22 @@ namespace DialogueManager.ViewModels
         private void ToggleTimePeriod(object obj)
         {
             if (AMSelected)
+            {
                 AMBtnVisibility = Visibility.Collapsed;
+            }
             else
+            {
                 PMBtnVisibility = Visibility.Collapsed;
+            }
+
             AMSelected = !AMSelected;
         }
 
         private ICommand toggleCastDisplayBtnClick;
-        public ICommand ToggleCastDisplayBtnClick {
-            get {
+        public ICommand ToggleCastDisplayBtnClick
+        {
+            get
+            {
                 toggleCastDisplayBtnClick = toggleCastDisplayBtnClick ?? new RelayCommand(param => ToggleCastDisplay(param), param => true);
                 return toggleCastDisplayBtnClick;
             }
@@ -1295,8 +1545,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand toggleKeepAliveBtnClick;
-        public ICommand ToggleKeepAliveBtnClick {
-            get {
+        public ICommand ToggleKeepAliveBtnClick
+        {
+            get
+            {
                 toggleKeepAliveBtnClick = toggleKeepAliveBtnClick ?? new RelayCommand(param => ToggleKeepAlive(param), param => true);
                 return toggleKeepAliveBtnClick;
             }
@@ -1309,8 +1561,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand toggleAudioBtnClick;
-        public ICommand ToggleAudioBtnClick {
-            get {
+        public ICommand ToggleAudioBtnClick
+        {
+            get
+            {
                 toggleAudioBtnClick = toggleAudioBtnClick ?? new RelayCommand(param => ToggleAudio(param), param => true);
                 return toggleAudioBtnClick;
             }
@@ -1320,15 +1574,22 @@ namespace DialogueManager.ViewModels
         private void ToggleAudio(object obj)
         {
             if (AudioMgr.AudioMuted)
+            {
                 AudioOnBtnVisibility = Visibility.Visible;
+            }
             else
+            {
                 AudioOnBtnVisibility = Visibility.Collapsed;
+            }
+
             AudioMgr.AudioMuted = !AudioMgr.AudioMuted;
         }
 
         private ICommand toggleOnlineModeBtnClick;
-        public ICommand ToggleOnlineModeBtnClick {
-            get {
+        public ICommand ToggleOnlineModeBtnClick
+        {
+            get
+            {
                 toggleOnlineModeBtnClick = toggleOnlineModeBtnClick ?? new RelayCommand(param => ToggleOnlineMode(param), param => true);
                 return toggleOnlineModeBtnClick;
             }
@@ -1338,16 +1599,23 @@ namespace DialogueManager.ViewModels
         private void ToggleOnlineMode(object obj)
         {
             if (AudioMgr.UseRecordings)
+            {
                 OfflineBtnVisibility = Visibility.Collapsed;
+            }
             else
+            {
                 OfflineBtnVisibility = Visibility.Visible;
+            }
+
             AudioMgr.UseRecordings = !AudioMgr.UseRecordings;
             AudioTextBoxIsReadOnly = !AudioTextBoxIsReadOnly;
         }
 
         private ICommand toggleRecordingBtnClick;
-        public ICommand ToggleRecordingBtnClick {
-            get {
+        public ICommand ToggleRecordingBtnClick
+        {
+            get
+            {
                 toggleRecordingBtnClick = toggleRecordingBtnClick ?? new RelayCommand(param => ToggleRecording(param), param => true);
                 return toggleRecordingBtnClick;
             }
@@ -1377,7 +1645,9 @@ namespace DialogueManager.ViewModels
         public void OnAudioTextHasFocus()
         {
             if (!AudioTextBoxIsReadOnly)
+            {
                 AudioTextUpdating = true;
+            }
         }
 
         public void ChangeSession(string name)
@@ -1423,7 +1693,7 @@ namespace DialogueManager.ViewModels
                     }
                     else
                     {
-                        DeviceName = String.Empty; 
+                        DeviceName = String.Empty;
                         PlayRuleBtnVisibility = Visibility.Collapsed;
                         PlayBtnVisibility = Visibility.Visible;
                         DuplicateRuleNumber = -1;

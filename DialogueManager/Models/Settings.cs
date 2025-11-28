@@ -11,7 +11,6 @@ using DialogueManager.Database;
 using DialogueManager.EventLog;
 using System;
 using System.Data;
-using System.IO;
 
 
 namespace DialogueManager.Models
@@ -55,7 +54,9 @@ namespace DialogueManager.Models
                             case "CheckAudioFiles":
                                 string intString = dataTable.Rows[0][option].ToString();
                                 if (Int32.TryParse(intString, out int intValue))
+                                {
                                     CheckAudioFiles = intValue == 1 ? true : false;
+                                }
                                 else
                                 {
                                     returnValue = false;
@@ -65,7 +66,9 @@ namespace DialogueManager.Models
                             case "MaxLogEntries":
                                 intString = dataTable.Rows[0][option].ToString();
                                 if (Int32.TryParse(intString, out intValue))
+                                {
                                     MaxLogEntries = intValue;
+                                }
                                 else
                                 {
                                     returnValue = false;

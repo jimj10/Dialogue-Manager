@@ -4,7 +4,7 @@ namespace DialogueManager
     static class LicenseText
     {
 
-        public static string MicrosoftPublicLicense { get; } = 
+        public static string MicrosoftPublicLicense { get; } =
             "\nMicrosoft Public License(MS-PL)\n\n" +
             "This license governs use of the accompanying software. If you use the software, you accept this license. " +
             "If you do not accept the license, do not use the software.\n\n" +
@@ -35,14 +35,14 @@ namespace DialogueManager
             "change. To the extent permitted under your local laws, the contributors exclude the implied warranties of " +
             "merchantability, fitness for a particular purpose and non-infringement.\n\n";
 
-        public static string ApacheLicense { get; } = 
+        public static string ApacheLicense { get; } =
             "\nCopyright 2018 Google\n\nLicensed under the Apache License, Version 2.0 " +
             "(the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at " +
             "http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the " +
             "License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License " +
             "for the specific language governing permissions and limitations under the License.";
 
-        public static string MitLicense { get; } = 
+        public static string MitLicense { get; } =
             "\nThe MIT License (MIT)\n\n" +
             "Copyright (c) .NET Foundation\n\n" +
             "Permission is hereby granted, free of charge, to any person obtaining a copy of this software " +
@@ -57,7 +57,7 @@ namespace DialogueManager
             "FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING " +
             "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n";
 
-        public static string NewtonSoftLicense { get; } = 
+        public static string NewtonSoftLicense { get; } =
             "\nThe MIT License (MIT)\n\n" +
             "Copyright(c) 2007 James Newton-King\n\n" +
             "Permission is hereby granted, free of charge, to any person obtaining a copy of this software " +
@@ -74,5 +74,5 @@ namespace DialogueManager
 
 
     }
-    
+
 }

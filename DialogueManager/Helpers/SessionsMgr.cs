@@ -7,10 +7,10 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  */
- 
+
 using DialogueManager.Database;
-using DialogueManager.Models;
 using DialogueManager.EventLog;
+using DialogueManager.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,7 +41,9 @@ namespace DialogueManager
                     return newSession.SessionId;
                 }
                 else
-                    return -1; 
+                {
+                    return -1;
+                }
             }
             return -2; // session name already exits
         }
@@ -83,17 +85,24 @@ namespace DialogueManager
             if (!originalSession.SessionName.Equals(sessionCopy.SessionName))
             {
                 if (Sessions.FirstOrDefault(x => x.SessionName.Equals(sessionCopy.SessionName)) != null)
+                {
                     return -1; // name already exists
+                }
             }
             var index = Sessions.FindIndex(c => c.SessionId == originalSession.SessionId);
             Sessions[index] = sessionCopy;
             if (SessionsTableMgr.UpdateSession(sessionCopy))
             {
                 if (!SessionClipsTableMgr.UpdateSessionClips(sessionCopy.SessionId, sessionCopy.SessionAudioClipsList))
+                {
                     return -3;
+                }
             }
             else
+            {
                 return -2;
+            }
+
             return sessionCopy.SessionId;
         }
 
@@ -129,7 +138,9 @@ namespace DialogueManager
                     return true;
                 }
                 else
+                {
                     return false;
+                }
             }
             return false;
         }
@@ -154,7 +165,9 @@ namespace DialogueManager
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
     }
 }

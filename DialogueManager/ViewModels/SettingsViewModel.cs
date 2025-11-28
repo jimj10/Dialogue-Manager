@@ -7,25 +7,27 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  */
-using DialogueManager.Models;
 using DialogueManager.Database;
 using DialogueManager.EventLog;
+using DialogueManager.Models;
 using DialogueManager.Views;
 using Microsoft.Win32;
 using System;
-using System.ComponentModel;
-using System.Windows.Input;
-using System.Windows;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Input;
 
 namespace DialogueManager.ViewModels
 {
     class SettingsViewModel : INotifyPropertyChanged
     {
 
-        public ObservableCollection<string> Voices {
-            get {
+        public ObservableCollection<string> Voices
+        {
+            get
+            {
                 var voices = GoogleTextToSpeechMgr.GetOnlineVoices(SelectedLanguageCode);
                 return voices != null
                     ? new ObservableCollection<string>(voices)
@@ -34,9 +36,11 @@ namespace DialogueManager.ViewModels
         }
 
         private string selectedVoice = Settings.OnlineVoice;
-        public string SelectedVoice {
+        public string SelectedVoice
+        {
             get { return selectedVoice; }
-            set {
+            set
+            {
                 if (selectedVoice != value)
                 {
                     selectedVoice = value;
@@ -48,10 +52,12 @@ namespace DialogueManager.ViewModels
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedVoice)));
                 }
             }
-        } 
+        }
 
-        public ObservableCollection<string> LanguageCodes {
-            get {
+        public ObservableCollection<string> LanguageCodes
+        {
+            get
+            {
                 var langCodes = GoogleTextToSpeechMgr.GetLanguageCodes();
                 return langCodes != null
                     ? new ObservableCollection<string>(GoogleTextToSpeechMgr.GetLanguageCodes())
@@ -60,9 +66,11 @@ namespace DialogueManager.ViewModels
         }
 
         private string selectedLanguageCode = Settings.LanguageCode;
-        public string SelectedLanguageCode {
+        public string SelectedLanguageCode
+        {
             get { return selectedLanguageCode; }
-            set {
+            set
+            {
                 if (selectedLanguageCode != value)
                 {
                     selectedLanguageCode = value;
@@ -79,50 +87,68 @@ namespace DialogueManager.ViewModels
         }
 
         private string credentialsFile = Settings.CredentialsFile;
-        public string CredentialsFile {
+        public string CredentialsFile
+        {
             get { return credentialsFile; }
-            set {
+            set
+            {
                 credentialsFile = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CredentialsFile)));
             }
         }
 
         private bool checkAudioFiles = Settings.CheckAudioFiles;
-        public bool CheckAudioFiles {
+        public bool CheckAudioFiles
+        {
             get { return checkAudioFiles; }
-            set {
+            set
+            {
                 checkAudioFiles = value;
                 SaveSettings("CheckAudioFiles");
             }
         }
 
         private Visibility startRecordBtnVisibility = Visibility.Visible;
-        public Visibility StartRecordBtnVisibility {
+        public Visibility StartRecordBtnVisibility
+        {
             get { return startRecordBtnVisibility; }
-            set {
+            set
+            {
                 if (value != startRecordBtnVisibility)
                 {
                     startRecordBtnVisibility = value;
                     if (startRecordBtnVisibility == Visibility.Visible)
+                    {
                         StopRecordBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         StopRecordBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StartRecordBtnVisibility)));
                 }
             }
         }
 
         private Visibility stopRecordBtnVisibility = Visibility.Collapsed;
-        public Visibility StopRecordBtnVisibility {
+        public Visibility StopRecordBtnVisibility
+        {
             get { return stopRecordBtnVisibility; }
-            set {
+            set
+            {
                 if (value != stopRecordBtnVisibility)
                 {
                     stopRecordBtnVisibility = value;
                     if (stopRecordBtnVisibility == Visibility.Visible)
+                    {
                         StartRecordBtnVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         StartRecordBtnVisibility = Visibility.Visible;
+                    }
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StopRecordBtnVisibility)));
                 }
             }
@@ -130,26 +156,34 @@ namespace DialogueManager.ViewModels
 
         public bool GenerateMissingAudioFiles { get; set; }
 
-        public ObservableCollection<string> AudioDelays {
+        public ObservableCollection<string> AudioDelays
+        {
             get { return new ObservableCollection<string>(AudioMgr.GetDelays()); }
         }
 
-        public string AudioDelay {
+        public string AudioDelay
+        {
             get { return AudioMgr.AudioDelay; }
-            set {
+            set
+            {
                 if (AudioMgr.AudioDelay != value)
+                {
                     AudioMgr.AudioDelay = value;
+                }
             }
         }
 
-        public ObservableCollection<string> AudioDevices {
+        public ObservableCollection<string> AudioDevices
+        {
             get { return new ObservableCollection<string>(AudioMgr.GetAudioDevices()); }
         }
 
         private string audioDevice = AudioMgr.GetAudioDevices()[0];
-        public string AudioDevice {
+        public string AudioDevice
+        {
             get { return audioDevice; }
-            set {
+            set
+            {
                 if (audioDevice != value)
                 {
                     audioDevice = value;
@@ -162,18 +196,22 @@ namespace DialogueManager.ViewModels
         private int MaxLogEntries = Settings.MaxLogEntries;
 
         private string currentInputLevelStr = "0";
-        public string CurrentInputLevelStr {
+        public string CurrentInputLevelStr
+        {
             get { return currentInputLevelStr; }
-            set {
+            set
+            {
                 currentInputLevelStr = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInputLevelStr)));
             }
         }
 
         private float currentInputLevel = 0;
-        public float CurrentInputLevel {
+        public float CurrentInputLevel
+        {
             get { return currentInputLevel; }
-            set {
+            set
+            {
                 currentInputLevel = value;
                 CurrentInputLevelStr = Math.Round(currentInputLevel, MidpointRounding.AwayFromZero).ToString();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInputLevel)));
@@ -186,9 +224,14 @@ namespace DialogueManager.ViewModels
         public SettingsViewModel()
         {
             if (SelectedVoice == null || !SelectedVoice.StartsWith(selectedLanguageCode))
+            {
                 SelectedVoice = Voices[0];
+            }
             else
+            {
                 EventSystem.Subscribe<OnlineVoicesLoaded>(OnOnlineVoicesLoaded);
+            }
+
             EventSystem.Subscribe<AudioUpdated>(OnAudioUpdated);
         }
 
@@ -199,7 +242,7 @@ namespace DialogueManager.ViewModels
 
         private void OnOnlineVoicesLoaded(OnlineVoicesLoaded onlineVoicesLoaded)
         {
-           SelectedVoice = Voices[0];
+            SelectedVoice = Voices[0];
         }
 
         private void SaveSettings(string setting)
@@ -244,10 +287,15 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand onBrowseCredentialsBtnClick;
-        public ICommand OnBrowseCredentialsBtnClick {
-            get {
+        public ICommand OnBrowseCredentialsBtnClick
+        {
+            get
+            {
                 if (onBrowseCredentialsBtnClick == null)
+                {
                     onBrowseCredentialsBtnClick = new RelayCommand(param => BrowseForCredentialsFile(param), param => true);
+                }
+
                 return onBrowseCredentialsBtnClick;
             }
             set { onBrowseCredentialsBtnClick = value; }
@@ -270,8 +318,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand onSoundCheckBtnClick;
-        public ICommand OnSoundCheckBtnClick {
-            get {
+        public ICommand OnSoundCheckBtnClick
+        {
+            get
+            {
                 onSoundCheckBtnClick = onSoundCheckBtnClick ?? new RelayCommand(param => SoundCheckBtnClick(param), param => true);
                 return onSoundCheckBtnClick;
             }
@@ -281,7 +331,9 @@ namespace DialogueManager.ViewModels
         private void SoundCheckBtnClick(object obj)
         {
             if (AudioMgr.UseRecordings)
+            {
                 AudioMgr.PlayAudioClip(Path.Combine(DirectoryMgr.AudioClipsDirectory, @"Sound Files\Sound Check.mp3"));
+            }
             else
             {
                 string audioFile = GoogleTextToSpeechMgr.GenerateSpeech("This is a CONVERSE sound level check. " +
@@ -292,8 +344,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand onSaveLogEntriesBtnClick;
-        public ICommand OnSaveLogEntriesBtnClick {
-            get {
+        public ICommand OnSaveLogEntriesBtnClick
+        {
+            get
+            {
                 onSaveLogEntriesBtnClick = onSaveLogEntriesBtnClick ?? new RelayCommand(param => SaveMaxLogEntries(param), param => true);
                 return onSaveLogEntriesBtnClick;
             }
@@ -310,7 +364,9 @@ namespace DialogueManager.ViewModels
                     SaveSettings("MaxLogEntries");
                 }
                 else
+                {
                     MaxLogEntriesTxt = Settings.MaxLogEntries.ToString();
+                }
             }
             else
             {
@@ -321,8 +377,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand toggleRecordingBtnClick;
-        public ICommand ToggleRecordingBtnClick {
-            get {
+        public ICommand ToggleRecordingBtnClick
+        {
+            get
+            {
                 toggleRecordingBtnClick = toggleRecordingBtnClick ?? new RelayCommand(param => ToggleRecording(param), param => true);
                 return toggleRecordingBtnClick;
             }
@@ -334,20 +392,24 @@ namespace DialogueManager.ViewModels
             if (!CheckingLevels)
             {
                 if (AudioMgr.StartRecording(true))
+                {
                     StartRecordBtnVisibility = Visibility.Collapsed;
+                }
             }
             else
             {
                 AudioMgr.StopRecording();
                 StartRecordBtnVisibility = Visibility.Visible;
-                
+
             }
             CheckingLevels = !CheckingLevels;
         }
 
         private ICommand refreshBtnClick;
-        public ICommand RefreshBtnClick {
-            get {
+        public ICommand RefreshBtnClick
+        {
+            get
+            {
                 refreshBtnClick = refreshBtnClick ?? new RelayCommand(param => RefreshVoices(param), param => true);
                 return refreshBtnClick;
             }
@@ -358,7 +420,9 @@ namespace DialogueManager.ViewModels
         {
             GoogleTextToSpeechMgr.GetOnlineVoices(SelectedLanguageCode, true);
             if (Voices.Count > 0)
+            {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Voices)));
-        }   
+            }
+        }
     }
 }

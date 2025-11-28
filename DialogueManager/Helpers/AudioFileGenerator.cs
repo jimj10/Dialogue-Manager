@@ -14,7 +14,6 @@
  * phrases in a text file (each phrase on a separate line)
  */
 
-using DialogueManager.EventLog;
 using System;
 using System.IO;
 
@@ -38,7 +37,10 @@ namespace DialogueManager
                     fileName = String.Join("_", audioText.Split(Path.GetInvalidFileNameChars()));
                     audiofile = Path.Combine(audioDirectory, fileName);
                     if (!GoogleTextToSpeechMgr.GenerateAudiofile(audioText, audiofile))
+                    {
                         return false; // bale out if first call fails
+                    }
+
                     fileName = String.Join("_", audioText.Replace("today", "every day").Split(Path.GetInvalidFileNameChars()));
                     audiofile = Path.Combine(audioDirectory, fileName);
                     allOK = GoogleTextToSpeechMgr.GenerateAudiofile(audioText.Replace("today", "every day"), audiofile) ? allOK : false;
@@ -55,12 +57,18 @@ namespace DialogueManager
             fileName = String.Join("_", audioText.Split(Path.GetInvalidFileNameChars()));
             audiofile = Path.Combine(audioDirectory, fileName);
             if (!File.Exists(audiofile + ".mp3"))
+            {
                 allOK = GoogleTextToSpeechMgr.GenerateAudiofile(audioText, audiofile) ? allOK : false;
+            }
+
             audioText = "If the room is empty";
             fileName = String.Join("_", audioText.Split(Path.GetInvalidFileNameChars()));
             audiofile = Path.Combine(audioDirectory, fileName);
             if (!File.Exists(audiofile + ".mp3"))
+            {
                 allOK = GoogleTextToSpeechMgr.GenerateAudiofile(audioText, audiofile) ? allOK : false;
+            }
+
             return allOK;
         }
 
@@ -134,7 +142,9 @@ namespace DialogueManager
                 fileName = String.Join("_", phrase.Split(Path.GetInvalidFileNameChars()));
                 audiofile = Path.Combine(audioDirectory, fileName);
                 if (!File.Exists(audiofile + ".mp3") && !GoogleTextToSpeechMgr.GenerateAudiofile(phrase, audiofile))
+                {
                     return false;
+                }
             }
 
             // Generate audio files with non-default filenames
@@ -144,7 +154,10 @@ namespace DialogueManager
             fileName = "Sound Check";
             audiofile = Path.Combine(audioDirectory, fileName);
             if (!File.Exists(audiofile + ".mp3"))
+            {
                 return GoogleTextToSpeechMgr.GenerateAudiofile(audioText, audiofile);
+            }
+
             return true;
         }
 

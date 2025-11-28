@@ -28,7 +28,7 @@ namespace DialogueManager.Database
         }
 
         internal static bool TableExists(string tableName)
-        { 
+        {
             using (SQLiteConnection dbConnection = GetSQLConnection())
             {
                 dbConnection.Open();
@@ -68,7 +68,10 @@ namespace DialogueManager.Database
                 if (!dlg.FileName.Equals(DBFileName))
                 {
                     if (File.Exists(DBFileName))
+                    {
                         BackupDatabase();
+                    }
+
                     lock (padlock)
                     {
                         File.Copy(dlg.FileName, DBFileName, true);
@@ -78,7 +81,7 @@ namespace DialogueManager.Database
                 else
                 {
                     //var messageWin = new MessageWin("Load Database File", String.Format("Database file {0} is already loaded.", dlg.FileName));
-                   // messageWin.Show();
+                    // messageWin.Show();
                 }
             }
             return false;
@@ -86,10 +89,10 @@ namespace DialogueManager.Database
 
         internal static void BackupDatabase(string snapshotName = null)
         {
-            string backupFilename = snapshotName == null 
-                ? Path.Combine(DirectoryMgr.AppDataDirectory, 
-                    DateTime.Now.ToString("yyMMddHHmm") + "_" 
-                    + Path.GetFileNameWithoutExtension(DBFileName) + ".sqlite") 
+            string backupFilename = snapshotName == null
+                ? Path.Combine(DirectoryMgr.AppDataDirectory,
+                    DateTime.Now.ToString("yyMMddHHmm") + "_"
+                    + Path.GetFileNameWithoutExtension(DBFileName) + ".sqlite")
                 : Path.Combine(DirectoryMgr.AppDataDirectory,
                     Path.GetFileNameWithoutExtension(DBFileName) + "-" + snapshotName + ".sqlite");
             lock (padlock)

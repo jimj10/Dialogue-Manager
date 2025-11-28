@@ -1,19 +1,18 @@
-﻿/* 
+﻿/*
  * Copyright(c) 2020 Department of Informatics, University of Sussex.
  * Dr. Kate Howland <grp-1782@sussex.ac.uk>
  * Licensed under the Microsoft Public License; you may not
- * use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * https://opensource.org/licenses/MS-PL 
- * 
+ * use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * https://opensource.org/licenses/MS-PL
+ *
  */
 
-// Takes care of audio devices. Plays audioclips, Keepalive 
-// and study session audio recordings. 
+// Takes care of audio devices. Plays audioclips, Keepalive
+// and study session audio recordings.
 
 using DialogueManager.EventLog;
 using NAudio.Lame;
-using NAudio.Mixer;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -24,19 +23,23 @@ using System.Windows.Media;
 
 namespace DialogueManager
 {
-    static class AudioMgr
+    internal static class AudioMgr
     {
         public static string SessionName { get; set; }
-        public static bool RecordingDeviceExists { get { return WaveIn.DeviceCount > 0; } }
+        public static bool RecordingDeviceExists
+        { get { return WaveIn.DeviceCount > 0; } }
 
         public static float CurrentInputLevel { get; set; }
 
         public static int DeviceNumber { get; set; } = 0;
 
         private static bool audioMuted = false;
-        public static bool AudioMuted {
+
+        public static bool AudioMuted
+        {
             get { return audioMuted; }
-            set {
+            set
+            {
                 audioMuted = value;
                 if (AudioMuted)
                 {
@@ -47,14 +50,20 @@ namespace DialogueManager
                         MediaPlaying = false;
                     }
                     if (KeepAlive)
+                    {
                         KeepAlivePlayer.Stop();
+                    }
+
                     EventSystem.Publish(new AudioMuted());
                     Logger.AddLogEntry(LogCategory.INFO, String.Format("Audio muted"));
                 }
                 else
                 {
                     if (KeepAlive)
+                    {
                         PlayKeepAlive();
+                    }
+
                     Logger.AddLogEntry(LogCategory.INFO, String.Format("Audio enabled"));
                 }
             }
@@ -63,9 +72,12 @@ namespace DialogueManager
         public static bool UseRecordings { get; set; } = true;
 
         public static double speedRatio = 1.0;
-        public static double SpeedRatio {
+
+        public static double SpeedRatio
+        {
             get { return speedRatio; }
-            set {
+            set
+            {
                 speedRatio = value;
                 if (MediaPlaying)
                 {
@@ -74,25 +86,37 @@ namespace DialogueManager
                     MPlayer.MediaEnded -= MediaEndedEventHandler;
                 }
                 if (KeepAlive)
+                {
                     KeepAlivePlayer.Stop();
+                }
+
                 MPlayer.SpeedRatio = speedRatio;
                 Logger.AddLogEntry(LogCategory.INFO, String.Format("SpeedRatio set to ") + speedRatio.ToString());
                 if (KeepAlive)
+                {
                     PlayKeepAlive();
+                }
             }
         }
 
         public static string AudioDelay { get; set; } = "Auto";
 
         private static bool keepAlive = true; // needed for many Bluetooth connections - without it can lose start of audio playback
-        public static bool KeepAlive {
+
+        public static bool KeepAlive
+        {
             get { return keepAlive; }
-            set {
+            set
+            {
                 keepAlive = value;
                 if (keepAlive)
+                {
                     PlayKeepAlive();
+                }
                 else
+                {
                     KeepAlivePlayer.Stop();
+                }
             }
         }
 
@@ -122,15 +146,18 @@ namespace DialogueManager
         public static void PlayAudioClip(string audioFile)
         {
             if (!Path.IsPathRooted(audioFile))
+            {
                 audioFile = Path.Combine(DirectoryMgr.AudioClipsDirectory, audioFile);
+            }
+
             if (SpeedRatio != 1.0 && UseRecordings)
             {
                 /*
                  * Changing playback speed doesn't work well with mp3 codec, so change to wav
                  * when using pre-recorded clips (online clip speed is set when audio generated).
-                 * A buffer of 'silence' (low volume subsonic tones) needs to be inserted at 
+                 * A buffer of 'silence' (low volume subsonic tones) needs to be inserted at
                  * start of clip to ensure proper playback.
-                 * 
+                 *
                  */
 
                 var clips = new List<string>();
@@ -140,12 +167,18 @@ namespace DialogueManager
                     if (AudioDelay.Equals("Auto"))
                     {
                         if (SpeedRatio < 0.9)
+                        {
                             clips.Add(Path.Combine(audioDirectory, "Silence600"));
+                        }
                         else
+                        {
                             clips.Add(Path.Combine(audioDirectory, "Silence500"));
+                        }
                     }
                     else
+                    {
                         clips.Add(Path.Combine(audioDirectory, "Silence" + AudioDelay));
+                    }
                 }
                 clips.Add(audioFile);
                 var mp3file = CombineAudioClips(clips);
@@ -154,7 +187,10 @@ namespace DialogueManager
                 audioFile = wavFile;
             }
             if (!audioFile.EndsWith("mp3") && !audioFile.EndsWith("wav"))
-                audioFile = audioFile + ".mp3";
+            {
+                audioFile += ".mp3";
+            }
+
             if (File.Exists(audioFile))
             {
                 if (MediaPlaying)
@@ -165,15 +201,20 @@ namespace DialogueManager
                 }
                 MPlayer.Close();
                 MPlayer = new MediaPlayer();
-                if (UseRecordings) // desired speed set when clip generated online 
+                if (UseRecordings) // desired speed set when clip generated online
+                {
                     MPlayer.SpeedRatio = SpeedRatio;
+                }
+
                 MPlayer.MediaEnded += MediaEndedEventHandler;
                 MediaPlaying = true;
                 MPlayer.Open(new Uri(audioFile));
                 MPlayer.Play();
             }
             else
+            {
                 Logger.AddLogEntry(LogCategory.ERROR, String.Format("PlayAudioClip: AudioFile not found"));
+            }
         }
 
         private static void MediaEndedEventHandler(object sender, EventArgs e)
@@ -187,7 +228,9 @@ namespace DialogueManager
         {
             KeepAlivePlayer.MediaEnded -= KeepAliveEndedEventHandler;
             if (KeepAlive)
+            {
                 PlayKeepAlive();
+            }
         }
 
         public static string CombineAudioClips(List<string> clips)
@@ -201,13 +244,22 @@ namespace DialogueManager
             if (clips.Count == 10)
             {
                 if (clips[0].EndsWith("mp3"))
+                {
                     outputFile = clips[0];
+                }
                 else
+                {
                     outputFile = clips[0] + ".mp3";
+                }
+
                 if (File.Exists(outputFile))
+                {
                     return outputFile;
+                }
                 else
+                {
                     return null;
+                }
             }
             else
             {
@@ -286,7 +338,10 @@ namespace DialogueManager
                     DateStamp = DateTime.Now.ToString("yyyy-MM-dd-HH_mm");
                     string AudioDirectory = Path.Combine(DirectoryMgr.RecordingsDirectory, SessionName);
                     if (!Directory.Exists(AudioDirectory))
+                    {
                         Directory.CreateDirectory(AudioDirectory);
+                    }
+
                     WaveAudioFile = Path.Combine(AudioDirectory, "Study_" + DateStamp + ".wav");
                     Mp3AudioFile = Path.Combine(AudioDirectory, "Study_" + DateStamp + ".mp3");
                     WaveFile = new WaveFileWriter(WaveAudioFile, WaveSource.WaveFormat);
@@ -305,7 +360,7 @@ namespace DialogueManager
                 {
                     Debug.WriteLine("Oops - something's gone awry..." + e.ToString());
                 }
-                
+
                 return true;
             }
             return false;
@@ -334,37 +389,39 @@ namespace DialogueManager
                                             e.Buffer[index + 0]);
                     // to floating point
                     var sample32 = sample / 32768f;
-                    // absolute value 
+                    // absolute value
                     if (sample32 < 0)
+                    {
                         sample32 = -sample32;
+                    }
                     // is this the max value?
                     if (sample32 > max)
+                    {
                         max = sample32;
+                    }
+
                     CurrentInputLevel = max * 100;
                     EventSystem.Publish(new AudioUpdated() { RecordingLevel = CurrentInputLevel });
                 }
             }
         }
+
         public static void OnRecordingStopped(object sender, StoppedEventArgs e)
         {
             Debug.WriteLine("WaveSourceRecordingStopped");
-            if (WaveSource != null)
-            {
-                WaveSource.Dispose();
-                WaveSource = null;
-            }
-            if (WaveFile != null)
-            {
-                WaveFile.Dispose();
-                WaveFile = null;
-            }
+            WaveSource?.Dispose();
+            WaveSource = null;
+            WaveFile?.Dispose();
+            WaveFile = null;
             if (Recording)
             {
                 Recording = false;
                 // Convert wav file to mp3
                 WavToMP3(WaveAudioFile, Mp3AudioFile);
                 if (File.Exists(WaveAudioFile) && File.Exists(Mp3AudioFile))
+                {
                     File.Delete(WaveAudioFile);
+                }
                 Logger.AddLogEntry(LogCategory.INFO, "Recording ended. Audio converted to mp3 file " + Mp3AudioFile);
             }
             else
@@ -378,7 +435,9 @@ namespace DialogueManager
         {
             using (var reader = new AudioFileReader(waveFileName))
             using (var writer = new LameMP3FileWriter(mp3FileName, reader.WaveFormat, bitRate))
+            {
                 reader.CopyTo(writer);
+            }
         }
 
         private static void MP3ToWav(string mp3file, string wavfile)
@@ -390,6 +449,6 @@ namespace DialogueManager
                     WaveFileWriter.CreateWaveFile(wavfile, convertedStream);
                 }
             }
-        }      
+        }
     }
 }

@@ -106,7 +106,7 @@ namespace DialogueManager.Views
                     AWin.Height += aplHeight;
                     AWin.Width = extendedWidth;
                 }
-                else 
+                else
                 {
                     ApacheLicense.Visibility = Visibility.Collapsed;
                     AWin.Height -= aplHeight;

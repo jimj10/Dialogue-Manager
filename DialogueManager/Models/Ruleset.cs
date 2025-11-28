@@ -37,9 +37,11 @@ namespace DialogueManager.Models
         public List<AudioClip> ActionClips { get; }
 
         private bool checkDuplicates;
-        public bool CheckDuplicates {
+        public bool CheckDuplicates
+        {
             get { return checkDuplicates; }
-            set {
+            set
+            {
                 if (checkDuplicates != value)
                 {
                     checkDuplicates = value;
@@ -49,9 +51,11 @@ namespace DialogueManager.Models
         }
 
         private bool checkConflicts;
-        public bool CheckConflicts {
+        public bool CheckConflicts
+        {
             get { return checkConflicts; }
-            set {
+            set
+            {
                 if (checkConflicts != value)
                 {
                     checkConflicts = value;
@@ -127,7 +131,10 @@ namespace DialogueManager.Models
         {
             int ruleNumber = 1;
             foreach (var rule in Rules)
+            {
                 rule.RuleNumber = ruleNumber++;
+            }
+
             RulesTableMgr.UpdateRules(RulesetId, Rules);
         }
 
@@ -151,7 +158,10 @@ namespace DialogueManager.Models
                 {
                     var audioClip = AudioClips.Where((x) => x.Label.Equals("Rule is a duplicate")).FirstOrDefault();
                     if (audioClip != null)
+                    {
                         RuleClipGenerator.UpdateDuplicateWarning(audioClip, rule.RuleNumber);
+                    }
+
                     return rule.RuleNumber;
                 }
             }
@@ -167,7 +177,10 @@ namespace DialogueManager.Models
                 {
                     var audioClip = AudioClips.Where((x) => x.Label.Equals("Rule conflicts with another rule")).FirstOrDefault();
                     if (audioClip != null)
+                    {
                         RuleClipGenerator.UpdateConflictWarning(audioClip, rule.RuleNumber);
+                    }
+
                     return rule.RuleNumber;
                 }
             }
@@ -179,10 +192,17 @@ namespace DialogueManager.Models
             StringBuilder sb = new StringBuilder();
             sb.Append(DeviceName + " Rules\n");
             if (Rules.Count == 0)
+            {
                 sb.Append("No rules found.");
+            }
             else
+            {
                 foreach (var rule in Rules)
+                {
                     sb.Append(rule.RuleNumber.ToString() + ") " + rule.StateText + "\n");
+                }
+            }
+
             return sb.ToString();
         }
 
@@ -344,7 +364,9 @@ namespace DialogueManager.Models
         {
             var audioClip = AudioClips.Where((x) => x.Label.Equals("OK, rule deleted")).FirstOrDefault();
             if (audioClip != null)
+            {
                 RuleClipGenerator.UpdateRuleDeletedAudioClip(audioClip, ruleNumber);
+            }
         }
 
         public bool LoadRulesFromDB()

@@ -28,7 +28,7 @@ namespace DialogueManager.Database
                     SQLiteTransaction trans = dbConnection.BeginTransaction();
                     cmd.CommandText = "DROP TABLE IF EXISTS[SESSIONS];" +
                         "CREATE TABLE [SESSIONS] (" +
-                        "[SessionId] INTEGER PRIMARY KEY AUTOINCREMENT," + 
+                        "[SessionId] INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "[SessionName] TEXT NOT NULL, " +
                         "[IsRuleset] INT NOT NULL," +
                         "[EnableCastDisplay] INTEGER NOT NULL," +
@@ -157,7 +157,10 @@ namespace DialogueManager.Database
             using (SQLiteConnection dbConnection = DBAdmin.GetSQLConnection())
             {
                 if (!DBAdmin.TableExists("SESSIONS"))
+                {
                     return null;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(dbConnection))
                 {
@@ -170,7 +173,7 @@ namespace DialogueManager.Database
                             {
                                 tempDataTable.Load(reader);
                                 dataTable = tempDataTable;
-                            }    
+                            }
                         }
                     }
                 }
@@ -184,7 +187,10 @@ namespace DialogueManager.Database
             using (SQLiteConnection dbConnection = DBAdmin.GetSQLConnection())
             {
                 if (!DBAdmin.TableExists("SESSIONS"))
+                {
                     return null;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(dbConnection))
                 {
@@ -198,7 +204,7 @@ namespace DialogueManager.Database
                             {
                                 tempDataTable.Load(reader);
                                 dataTable = tempDataTable;
-                            }    
+                            }
                         }
                     }
                 }
@@ -212,7 +218,10 @@ namespace DialogueManager.Database
             using (SQLiteConnection dbConnection = DBAdmin.GetSQLConnection())
             {
                 if (!DBAdmin.TableExists("SESSIONS"))
+                {
                     return false;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(dbConnection))
                 {
@@ -224,7 +233,7 @@ namespace DialogueManager.Database
                             using (sessionsTable = new DataTable())
                             {
                                 sessionsTable.Load(reader);
-                            }   
+                            }
                         }
                     }
                 }
@@ -238,7 +247,7 @@ namespace DialogueManager.Database
                     string isRulesetStr = dr["IsRuleset"].ToString();
                     string keepAliveStr = dr["KeepAlive"].ToString();
                     string speedRatioStr = dr["SpeedRatio"].ToString();
-                    
+
                     if (Int32.TryParse(sessionIdstr, out int sessionId)
                         && Int32.TryParse(isRulesetStr, out int isRuleset)
                         && Int32.TryParse(enableCastDisplaystr, out int enableCastDisplay)
@@ -257,7 +266,10 @@ namespace DialogueManager.Database
                         };
                         SessionClipsTableMgr.LoadAudioClipsListFromDB(session.SessionId, session.SessionAudioClipsList);
                         if (isRuleset == 1)
+                        {
                             RulesetsTableMgr.LoadRulesetFromDB(session);
+                        }
+
                         sessions.Add(session);
                     }
                 }

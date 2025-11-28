@@ -8,8 +8,6 @@
  * 
  */
 using DialogueManager.ViewModels;
-using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace DialogueManager.Views

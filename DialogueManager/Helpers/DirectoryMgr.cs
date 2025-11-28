@@ -31,7 +31,7 @@ namespace DialogueManager
 
         internal static void SetAppDirectories()
         {
-            SettingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Jackson\Dialogue Manager\"); 
+            SettingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Jackson\Dialogue Manager\");
             Directory.CreateDirectory(SettingsDirectory);
             TempDirectory = Path.Combine(Path.GetTempPath(), @"DialogueManager\");
             Directory.CreateDirectory(TempDirectory);

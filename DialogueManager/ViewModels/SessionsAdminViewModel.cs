@@ -7,8 +7,7 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  */
- 
-using DialogueManager.Database;
+
 using DialogueManager.Models;
 using DialogueManager.Views;
 using System;
@@ -23,7 +22,7 @@ using System.Windows.Media;
 
 namespace DialogueManager.ViewModels
 {
-    
+
     class SessionsAdminViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<AudioClip> AudioClips { get; private set; }
@@ -32,9 +31,11 @@ namespace DialogueManager.ViewModels
         public ObservableCollection<AudioClip> SessionClips { get; private set; }
 
         private string selectedSessionName;
-        public string SelectedSessionName {
+        public string SelectedSessionName
+        {
             get { return selectedSessionName; }
-            set {
+            set
+            {
                 if (selectedSessionName != value)
                 {
                     selectedSessionName = value;
@@ -45,9 +46,11 @@ namespace DialogueManager.ViewModels
         }
 
         private string sessionName;
-        public string SessionName {
+        public string SessionName
+        {
             get { return sessionName; }
-            set {
+            set
+            {
                 if (sessionName != value)
                 {
                     sessionName = value;
@@ -62,9 +65,11 @@ namespace DialogueManager.ViewModels
 
         private bool isRuleset;
 
-        public bool IsRuleset {
+        public bool IsRuleset
+        {
             get { return isRuleset; }
-            set {
+            set
+            {
                 isRuleset = value;
                 if (AudioclipsView != null)
                 {
@@ -91,7 +96,10 @@ namespace DialogueManager.ViewModels
                 SessionName = SelectedSessionName;
             }
             if (SelectedSession == null)
+            {
                 ChangeSession(null);
+            }
+
             EventSystem.Subscribe<AudioClipsInventoryChanged>(OnAudioClipsInventoryChanged);
         }
 
@@ -115,7 +123,7 @@ namespace DialogueManager.ViewModels
                 SessionClips = new ObservableCollection<AudioClip>();
                 SessionClipsView = CollectionViewSource.GetDefaultView(SessionClips);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSessionName)));
-            } 
+            }
             else
             {
                 SelectedSession = SessionsMgr.GetSessionCopy(name);
@@ -150,13 +158,20 @@ namespace DialogueManager.ViewModels
         {
             AudioClip audioClip = item as AudioClip;
             if (SessionClips != null && SessionClips.FirstOrDefault(x => x.Label.Equals(audioClip.Label)) != null)
-                return false; 
+            {
+                return false;
+            }
+
             if (!IsRuleset)
-                return  audioClip.Category.Equals("Standard");
+            {
+                return audioClip.Category.Equals("Standard");
+            }
             else
+            {
                 return (!audioClip.Label.Contains("OK, rule deleted")
                     && !audioClip.Label.Contains("List rules")
                     && !audioClip.Label.Contains("State selected rule"));
+            }
         }
 
         public void OnAudioClipBtnClick(Button btn)
@@ -164,8 +179,8 @@ namespace DialogueManager.ViewModels
             var audioClipLabel = btn.Content?.ToString();
             if (!SelectedAudioClipButtons.Contains(btn))
             {
-                if (SelectedAudioClipButtons.Count == 0 
-                    || Keyboard.IsKeyDown(Key.LeftShift) 
+                if (SelectedAudioClipButtons.Count == 0
+                    || Keyboard.IsKeyDown(Key.LeftShift)
                     || Keyboard.IsKeyDown(Key.RightShift))
                 {
                     btn.Foreground = new SolidColorBrush(Colors.White);
@@ -176,7 +191,7 @@ namespace DialogueManager.ViewModels
                 {
                     foreach (var button in SelectedAudioClipButtons)
                     {
-                        button.Foreground = new SolidColorBrush(Colors.Black); 
+                        button.Foreground = new SolidColorBrush(Colors.Black);
                         button.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(button.Background.ToString()));
                     }
                     SelectedAudioClipButtons.Clear();
@@ -184,13 +199,13 @@ namespace DialogueManager.ViewModels
                     btn.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(btn.Background.ToString())));
                     SelectedAudioClipButtons.Add(btn);
                 }
-                
+
             }
             else if (!(SelectedAudioClipButtons.Contains(btn) && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))))
             {
                 foreach (var button in SelectedAudioClipButtons)
                 {
-                    button.Foreground = new SolidColorBrush(Colors.White); 
+                    button.Foreground = new SolidColorBrush(Colors.White);
                     button.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(btn.Background.ToString())));
                 }
                 SelectedAudioClipButtons.Clear();
@@ -206,7 +221,7 @@ namespace DialogueManager.ViewModels
             {
                 if (SelectedSessionClipButtons.Count == 0 || Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                 {
-                    btn.Foreground = new SolidColorBrush(Colors.White); 
+                    btn.Foreground = new SolidColorBrush(Colors.White);
                     btn.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(btn.Background.ToString()));
                     SelectedSessionClipButtons.Add(btn);
                 }
@@ -214,11 +229,11 @@ namespace DialogueManager.ViewModels
                 {
                     foreach (var button in SelectedSessionClipButtons)
                     {
-                        button.Foreground = new SolidColorBrush(Colors.Black); 
+                        button.Foreground = new SolidColorBrush(Colors.Black);
                         button.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(button.Background.ToString()));
                     }
                     SelectedSessionClipButtons.Clear();
-                    btn.Foreground = new SolidColorBrush(Colors.White); 
+                    btn.Foreground = new SolidColorBrush(Colors.White);
                     btn.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(btn.Background.ToString()));
                     SelectedSessionClipButtons.Add(btn);
                 }
@@ -228,7 +243,7 @@ namespace DialogueManager.ViewModels
             {
                 foreach (var button in SelectedSessionClipButtons)
                 {
-                    button.Foreground = new SolidColorBrush(Colors.White); 
+                    button.Foreground = new SolidColorBrush(Colors.White);
                     button.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(ColourHelper.GetBtnInverseColour(btn.Background.ToString()));
                 }
                 SelectedSessionClipButtons.Clear();
@@ -236,8 +251,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand newBtnClick;
-        public ICommand NewBtnClick {
-            get {
+        public ICommand NewBtnClick
+        {
+            get
+            {
                 newBtnClick = newBtnClick ?? new RelayCommand(param => SetNewSession(param), param => true);
                 return newBtnClick;
             }
@@ -250,8 +267,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand deleteBtnClick;
-        public ICommand DeleteBtnClick {
-            get {
+        public ICommand DeleteBtnClick
+        {
+            get
+            {
                 deleteBtnClick = deleteBtnClick ?? new RelayCommand(param => DeleteSessionConfirm(param), param => true);
                 return deleteBtnClick;
             }
@@ -279,8 +298,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand addBtnClick;
-        public ICommand AddBtnClick {
-            get {
+        public ICommand AddBtnClick
+        {
+            get
+            {
                 addBtnClick = addBtnClick ?? new RelayCommand(param => AddAudioClips(param), param => true);
                 return addBtnClick;
             }
@@ -306,8 +327,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand removeBtnClick;
-        public ICommand RemoveBtnClick {
-            get {
+        public ICommand RemoveBtnClick
+        {
+            get
+            {
                 removeBtnClick = removeBtnClick ?? new RelayCommand(param => RemoveAudioClips(param), param => true);
                 return removeBtnClick;
             }
@@ -329,8 +352,10 @@ namespace DialogueManager.ViewModels
         }
 
         private ICommand moveUpBtnClick;
-        public ICommand MoveUpBtnClick {
-            get {
+        public ICommand MoveUpBtnClick
+        {
+            get
+            {
                 moveUpBtnClick = moveUpBtnClick ?? new RelayCommand(param => MoveSessionClipUp(param), param => true);
                 return moveUpBtnClick;
             }
@@ -341,13 +366,18 @@ namespace DialogueManager.ViewModels
         {
             var index = SessionClips.IndexOf(SelectedAudioClip);
             if (index > 0)
+            {
                 SessionClips.Move(index, index - 1);
+            }
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SessionClips)));
         }
 
         private ICommand moveDownBtnClick;
-        public ICommand MoveDownBtnClick {
-            get {
+        public ICommand MoveDownBtnClick
+        {
+            get
+            {
                 moveDownBtnClick = moveDownBtnClick ?? new RelayCommand(param => MoveSessionClipDown(param), param => true);
                 return moveDownBtnClick;
             }
@@ -358,13 +388,18 @@ namespace DialogueManager.ViewModels
         {
             var index = SessionClips.IndexOf(SelectedAudioClip);
             if (index != -1)
+            {
                 SessionClips.Move(index, index + 1);
+            }
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SessionClips)));
         }
 
         private ICommand saveBtnClick;
-        public ICommand SaveBtnClick {
-            get {
+        public ICommand SaveBtnClick
+        {
+            get
+            {
                 saveBtnClick = saveBtnClick ?? new RelayCommand(param => SaveSession(param), param => true);
                 return saveBtnClick;
             }
@@ -402,7 +437,9 @@ namespace DialogueManager.ViewModels
             if (SessionClips != null)
             {
                 foreach (var sessionClip in SessionClips)
+                {
                     SelectedSession.SessionAudioClipsList.Add(sessionClip.ClipId);
+                }
             }
             ret = SessionsMgr.UpdateSession(SelectedSession);
             if (ret > 0)
@@ -411,22 +448,31 @@ namespace DialogueManager.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SessionNames)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSessionName)));
                 ChangeSession(newSessionName);
-                EventSystem.Publish(new SessionInventoryChanged() { SessionName = newSessionName }); 
-                    
+                EventSystem.Publish(new SessionInventoryChanged() { SessionName = newSessionName });
+
             }
             else if (ret == -1)
+            {
                 msg = "Error: Session name already exists - please choose another name.";
+            }
             else if (ret == -2)
+            {
                 msg = "Error: Problem saving session to database.";
+            }
             else
+            {
                 msg = "Error: Problem saving session audioClips to database.";
+            }
+
             messageWin = new MessageWin("Save Session", msg);
             messageWin.Show();
         }
 
         private ICommand cancelBtnClick;
-        public ICommand CancelBtnClick {
-            get {
+        public ICommand CancelBtnClick
+        {
+            get
+            {
                 cancelBtnClick = cancelBtnClick ?? new RelayCommand(param => CancelChanges(param), param => true);
                 return cancelBtnClick;
             }
@@ -436,8 +482,10 @@ namespace DialogueManager.ViewModels
         private void CancelChanges(object obj)
         {
             if (SelectedSession != null)
+            {
                 ChangeSession(originalSessionName);
+            }
         }
-        
+
     }
 }

@@ -26,12 +26,18 @@ namespace DialogueManager.Models
 
         public bool Complete { get { return (TriggerClip != null && ActionClip != null); } } // rule has all required information
 
-        public string StateText {
-            get {
+        public string StateText
+        {
+            get
+            {
                 if (TriggerClip != null && ActionClip != null)
+                {
                     return TriggerClip.StateText + ", " + ActionClip.StateText + ".";
+                }
                 else
+                {
                     return null;
+                }
             }
         }
 
@@ -42,26 +48,42 @@ namespace DialogueManager.Models
             if (activity.Equals("State"))
             {
                 if (ruleNumber == -1) // New rule
+                {
                     sb.Append("New rule. " + StateText);
+                }
                 else
+                {
                     sb.Append("Rule " + ruleNumberText + ". " + StateText);
+                }
             }
             else if (activity.Equals("Confirm"))
             {
                 if (ruleNumber == -1)
+                {
                     sb.Append("OK, new rule added. ");
+                }
                 else
+                {
                     sb.Append("OK, rule " + ruleNumberText + " changed. ");
+                }
+
                 if (!ActionClip.Label.Equals("Generic New Rule"))
+                {
                     sb.Append(StateText);
+                }
             }
             else if (activity.Equals("Check"))
             {
                 sb.Append("Let me check I have understood. ");
                 if (ruleNumber == -1)
+                {
                     sb.Append("Add new rule: ");
+                }
                 else
+                {
                     sb.Append("Change rule " + ruleNumberText + ": ");
+                }
+
                 sb.Append(StateText.ToLower());
                 sb.Append(" Is this correct?");
             }
@@ -79,9 +101,14 @@ namespace DialogueManager.Models
                 if (activity.Equals("State"))
                 {
                     if (ruleNumber == -1) // New rule
+                    {
                         clips.Add(Path.Combine(audioDirectory, "New rule"));
+                    }
                     else
+                    {
                         clips.Add(Path.Combine(audioDirectory, "Rule " + ruleNumberText));
+                    }
+
                     clips.Add(TriggerClip.StateAudioFile);
                     clips.Add(ActionClip.StateAudioFile);
                 }
@@ -89,9 +116,14 @@ namespace DialogueManager.Models
                 {
                     clips.Add(Path.Combine(audioDirectory, "OK"));
                     if (ruleNumber == -1)
+                    {
                         clips.Add(Path.Combine(audioDirectory, "New rule added"));
+                    }
                     else
+                    {
                         clips.Add(Path.Combine(audioDirectory, "Rule " + ruleNumberText + " changed"));
+                    }
+
                     if (!ActionClip.Label.Equals("Generic New Rule"))
                     {
                         clips.Add(TriggerClip.StateAudioFile);
@@ -102,9 +134,14 @@ namespace DialogueManager.Models
                 {
                     clips.Add(Path.Combine(audioDirectory, "Let me check I have understood"));
                     if (ruleNumber == -1)
+                    {
                         clips.Add(Path.Combine(audioDirectory, "Add new rule"));
+                    }
                     else
+                    {
                         clips.Add(Path.Combine(audioDirectory, "Change rule " + ruleNumberText));
+                    }
+
                     clips.Add(TriggerClip.StateAudioFile);
                     clips.Add(ActionClip.StateAudioFile);
                     clips.Add(Path.Combine(audioDirectory, "Is this correct_"));

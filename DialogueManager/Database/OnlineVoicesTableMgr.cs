@@ -98,7 +98,9 @@ namespace DialogueManager.Database
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
     }
 }

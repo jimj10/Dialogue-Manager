@@ -16,7 +16,7 @@ using System.Windows.Input;
 namespace DialogueManager.Views
 {
     public partial class DashboardView : UserControl
-    {  
+    {
         private readonly Regex NumericRegex = new Regex("[^0-9]+");
 
         private DashboardViewModel viewModel;
@@ -25,7 +25,7 @@ namespace DialogueManager.Views
         {
             InitializeComponent();
             viewModel = new DashboardViewModel();
-            DataContext = viewModel; 
+            DataContext = viewModel;
         }
 
         // Need to pass Button to DashboardViewModel methods
@@ -38,24 +38,28 @@ namespace DialogueManager.Views
         {
             // Prohibit non-numeric characters
             if (NumericRegex.IsMatch(e.Text))
+            {
                 e.Handled = true;
+            }
         }
 
         private void HourTextBoxMouseLeave(object sender, RoutedEventArgs e)
         {
-           HourTextBox.Text = viewModel.CheckHours(HourTextBox.Text);
+            HourTextBox.Text = viewModel.CheckHours(HourTextBox.Text);
         }
 
         private void MinuteTextBoxMouseLeave(object sender, RoutedEventArgs e)
         {
-           MinuteTextBox.Text = viewModel.CheckMinutes(MinuteTextBox.Text);
+            MinuteTextBox.Text = viewModel.CheckMinutes(MinuteTextBox.Text);
         }
 
         private void OnMouseEnterPlayBtn(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn.IsEnabled)
+            {
                 viewModel.DisplayAudioText(btn.Tag.ToString());
+            }
         }
     }
 }

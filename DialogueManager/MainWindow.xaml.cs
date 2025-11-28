@@ -1,5 +1,4 @@
 ﻿using DialogueManager.EventLog;
-using DialogueManager.Models;
 using DialogueManager.ViewModels;
 using DialogueManager.Views;
 using System;
@@ -21,7 +20,10 @@ namespace DialogueManager
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             AppSetup.MainWindow = this;
             if (!AppSetup.InitialiseApp())
+            {
                 this.Close();
+            }
+
             MainMenu.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#e8940c"));
             var dashboardView = new DashboardView();
             TabMgr.MainWindow = this;

@@ -119,7 +119,10 @@ namespace DialogueManager.Database
             using (SQLiteConnection dbConnection = DBAdmin.GetSQLConnection())
             {
                 if (!DBAdmin.TableExists("RULESETS"))
+                {
                     return false;
+                }
+
                 dbConnection.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(dbConnection))
                 {

@@ -41,7 +41,9 @@ namespace DialogueManager.Views
             Button lblFrom = e.Source as Button;
 
             if (e.LeftButton == MouseButtonState.Pressed)
+            {
                 DragDrop.DoDragDrop(lblFrom, lblFrom, DragDropEffects.Copy);
+            }
         }
 
         private void AudioClipQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
@@ -49,7 +51,9 @@ namespace DialogueManager.Views
             Button lblFrom = e.Source as Button;
 
             if (!e.KeyStates.HasFlag(DragDropKeyStates.LeftMouseButton))
+            {
                 lblFrom.Content = "...";
+            }
         }
 
         private void SessionAudioClipsDrop(object sender, DragEventArgs e)

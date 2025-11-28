@@ -7,8 +7,8 @@
  * https://opensource.org/licenses/MS-PL 
  * 
  */
- 
- using DialogueManager.EventLog;
+
+using DialogueManager.EventLog;
 using DialogueManager.Models;
 using System;
 using System.Collections.Generic;
@@ -36,8 +36,8 @@ namespace DialogueManager
                     List<string> clips = new List<string>();
                     string audioDirectory = Path.Combine(DirectoryMgr.AudioClipsDirectory, "Ruleset");
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("Let me check I have understood. "); 
-                    string numberTxt = TextHelper.GetNumberText(ruleNumber); 
+                    sb.Append("Let me check I have understood. ");
+                    string numberTxt = TextHelper.GetNumberText(ruleNumber);
                     audioClip.ConfirmText = "OK. Rule " + numberTxt + " deleted";
                     sb.Append("Do you want to delete rule " + numberTxt + "?");
                     clips.Add(Path.Combine(audioDirectory, "OK"));
@@ -51,20 +51,24 @@ namespace DialogueManager
                 }
             }
             else
+            {
                 Logger.AddLogEntry(LogCategory.ERROR, String.Format("RuleClipGenerator.SetRuleDeletedAudioClip(): ruleNumber {0} out of range.", ruleNumber));
+            }
         }
 
         public static void UpdateDuplicateWarning(AudioClip audioClip, int ruleNumber)
         {
             if (ruleNumber < 7)
             {
-                string audioDirectory = Path.Combine(DirectoryMgr.AudioClipsDirectory, "Ruleset"); 
+                string audioDirectory = Path.Combine(DirectoryMgr.AudioClipsDirectory, "Ruleset");
                 string numberTxt = TextHelper.GetNumberText(ruleNumber);
                 audioClip.StateText = "This new rule is a duplicate of rule " + numberTxt + ".";
                 audioClip.StateAudioFile = Path.Combine(audioDirectory, "This new rule is a duplicate of rule " + numberTxt + ".mp3");
             }
             else
+            {
                 Logger.AddLogEntry(LogCategory.ERROR, String.Format("RuleClipGenerator.UpdateDuplicateWarning(): ruleNumber {0} out of range.", ruleNumber));
+            }
         }
 
         public static void UpdateConflictWarning(AudioClip audioClip, int ruleNumber)
@@ -72,7 +76,7 @@ namespace DialogueManager
             if (ruleNumber < 7)
             {
                 List<string> clips = new List<string>();
-                string audioDirectory = Path.Combine(DirectoryMgr.AudioClipsDirectory, "Ruleset"); 
+                string audioDirectory = Path.Combine(DirectoryMgr.AudioClipsDirectory, "Ruleset");
                 string numberTxt = TextHelper.GetNumberText(ruleNumber);
                 audioClip.StateText = "This new rule conflicts with rule " + numberTxt + ". Would you like to change rule one?";
                 clips.Add(Path.Combine(audioDirectory, "This new rule conflicts with rule " + numberTxt));
@@ -80,7 +84,9 @@ namespace DialogueManager
                 audioClip.StateAudioFile = AudioMgr.CombineAudioClips(clips);
             }
             else
+            {
                 Logger.AddLogEntry(LogCategory.ERROR, String.Format("RuleClipGenerator.UpdateConflictWarning(): ruleNumber {0} out of range.", ruleNumber));
+            }
         }
     }
 }

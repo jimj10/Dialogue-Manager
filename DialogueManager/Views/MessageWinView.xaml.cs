@@ -14,7 +14,8 @@ namespace DialogueManager.Views
 
     public partial class MessageWinView : Window
     {
-        public string Title {
+        public string Title
+        {
             get { return MsgWin.Title; }
             set { MsgWin.Title = value; }
         }
